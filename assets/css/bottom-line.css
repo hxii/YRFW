@@ -1,0 +1,29 @@
+li.product a img.yoStar, .woocommerce-page ul.products li.product a img.yoStar {
+  display: inline-block;
+  width: 14px;
+  height: auto;
+  margin: 0;
+  box-shadow: 0 0px 0px 0 rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 0px 0px 0 rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 0px 0px 0 rgba(0,0,0,0.3);
+}
+.post-type-archive .standalone-bottomline{
+	display: flex;
+    justify-content: center;
+}
+.yotpo {
+	margin-bottom:.5rem;
+}
+
+.QABottomLine, .bottomLine  {
+  display: inline-block;
+}
+
+.bottomLine + .QABottomLine {
+  margin-left: 0.5em;
+  margin-bottom: 0.615em;
+}
+
+.yotpo-icon-double-bubble, .yotpo-stars {
+    margin: 0 5px 0 0 !important;
+}

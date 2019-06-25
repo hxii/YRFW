@@ -1,0 +1,8 @@
+textarea.hxii-log {
+	background: #444;
+	color: #fff;
+	font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace!important;
+	width: 100%;
+	border: none;
+	border-radius: .25rem;
+}
