@@ -66,7 +66,7 @@ class YRFW_Assets {
 		$version = $this->get_widget_version();
 		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js" as="script">';
 		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.css?widget_version=' . $version . '" as="style">';
-		echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font">';
+		echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font" crossorigin="anonymous">';
 	}
 
 	/**
@@ -84,7 +84,7 @@ class YRFW_Assets {
 	/**
 	 * Get widget version for prefetch
 	 *
-	 * @return strinrg widget version
+	 * @return string widget version
 	 */
 	private function get_widget_version() {
 		$version = get_transient( 'yotpo_widget_version' );

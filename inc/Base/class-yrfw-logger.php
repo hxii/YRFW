@@ -54,16 +54,27 @@ class Hxii_Logger {
 	}
 
 	public function title( string $string ) {
-		$yrfw_loggerstring = "══ $string " . str_repeat( '═', ( 80 - strlen( $string ) ) );
-		$this->write_to_file( $yrfw_loggerstring, 'debug', 'D' );
+		$loggerstring = "══ $string " . str_repeat( '═', ( 80 - strlen( $string ) ) );
+		$this->write_to_file( $loggerstring, 'debug', 'D' );
 	}
 
-	public function read_log() {
-		return file_exists( $this->filepath ) ? file_get_contents( $this->filepath ) : false;
+	public function read_log( int $lines = 50 ) {
+		// return file_exists( $this->filepath ) ? file_get_contents( $this->filepath ) : false;
+		// return readfile( $this->filepath );
+		$tail = shell_exec( "tail -n $lines $this->filepath" );
+		return $tail;
+	}
+
+	public function reset_log() {
+		file_put_contents( $this->filepath, "");
 	}
 
 	public static function get_version() {
 		return 'HXii Logger v.' . HXII_LOGGER_VER;
+	}
+
+	public function get_filename( $path ) {
+		return ( $path ) ? $this->filename : $this->filepath;
 	}
 
 	private function write_to_file( $string, $level, $let ) {

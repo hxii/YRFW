@@ -29,7 +29,7 @@
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="bottom_line_enabled_product" value="false">
 			<input type="checkbox" class="custom-control-input" value="true" name="bottom_line_enabled_product" <?php echo checked( true, $settings['bottom_line_enabled_product'], false ); ?> id="bottom_line_enabled_product">
-			<label class="custom-control-label" for="bottom_line_enabled_product"><?php esc_html_e( 'Show star rating on product pages?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Rating in product pages looks like this <img src='http://wcdev.local/wp-content/plugins/yotpo-dev/assets/images/product-bottomline.png' style='display:block;width:150px;' width='150px'>"></span></label>
+			<label class="custom-control-label" for="bottom_line_enabled_product"><?php esc_html_e( 'Show star rating on product pages?', 'yrfw' ); ?></label>
 			<div id="stars_jsinject" style="display: none">
 				<input type="checkbox" class="custom-control-input" value="true" name="stars_jsinject_check" id="stars_jsinject_check">
 				<label class="custom-control-label" for="stars_jsinject_check">Try injecting with JS?</label>
@@ -38,7 +38,7 @@
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="qna_enabled_product" value="false">
 			<input type="checkbox" class="custom-control-input" value="true" name="qna_enabled_product" <?php echo checked( true, $settings['qna_enabled_product'], false ); ?> id="qna_enabled_product">
-			<label class="custom-control-label" for="qna_enabled_product"><?php esc_html_e( 'Show Q&A rating on product pages?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Q&A rating looks like this"></span></label>
+			<label class="custom-control-label" for="qna_enabled_product"><?php esc_html_e( 'Show Q&A rating on product pages?', 'yrfw' ); ?></label>
 		</div>
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="bottom_line_enabled_category" value="false">
@@ -48,7 +48,7 @@
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="disable_native_review_system" value="false">
 			<input type="checkbox" class="custom-control-input" value="true" name="disable_native_review_system" <?php echo checked( true, $settings['disable_native_review_system'], false ); ?> id="disable_native_review_system">
-			<label class="custom-control-label" for="disable_native_review_system"><?php esc_html_e( 'Disable native reviews system?', 'yrfw' ); ?></label>
+			<label class="custom-control-label" for="disable_native_review_system"><?php esc_html_e( 'Disable native reviews system?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Enabling his option will disable the native reviews in WooCommerce."></span></label>
 		</div>
 		<hr>
 		<button type="submit" class="btn btn-primary" <?php echo disabled( $settings['authenticated'], false ); ?> name="widgets"><?php esc_html_e( 'Save Settings', 'yrfw' ); ?></button>

@@ -1,17 +1,27 @@
 <div class="container py-3">
 	<h1>Info</h1>
-	<div>Yotpo Plugin Version <span class="badge badge-pill badge-primary"><?= YRFW_PLUGIN_VERSION; ?></span></div>
-	<div>WooCommerce Version <span class="badge badge-pill badge-primary"><?= WOOCOMMERCE_VERSION; ?></span></div>
-	<div>Wordpress Version <span class="badge badge-pill badge-primary"><?= get_bloginfo( 'version' ); ?></span></div>
-	<div>PHP Version <span class="badge badge-pill badge-primary"><?= phpversion(); ?></span></div>
-	<div>Logger Version
+	<?php
+		global $yrfw_logger, $yotpo_scheduler;
+		$debug_settings = [
+			'Yotpo Plugin Version' => YRFW_PLUGIN_VERSION,
+			'WooCommerce Version'  => WOOCOMMERCE_VERSION,
+			'WordPress Version'    => get_bloginfo( 'version' ),
+			'PHP Version'          => phpversion(),
+			'Logger Version'       => Hxii_Logger::get_version(),
+			'Logger Level'         => $yrfw_logger->loglevel,
+			'Logger File'          => $yrfw_logger->get_filename( false ),
+			'Widget Version'       => get_transient( 'yotpo_widget_version' ),
+			'Scheduled Submission' => $yotpo_scheduler->get_scheduler(),
+			'Products Cache'       => '<a href=" ' . YRFW_PLUGIN_URL . '/products.json">Download</a>(' . ( filesize( YRFW_PLUGIN_PATH . '/products.json' ) / 1024 / 1024 ) . 'MB)',
+		];
+	?>
+	<dl class="row">
 		<?php
-			global $yrfw_logger;
-			if ( class_exists( 'Hxii_Logger' ) ) {
-				echo '<span class="badge badge-pill badge-primary">'. Hxii_Logger::get_version() .'</span>';
-				echo '<span class="badge badge-pill badge-secondary">'. ( $yrfw_logger->loglevel ) .'</span>';
+			foreach ( $debug_settings as $key => $value ) {
+				?>
+				<dt class="col-sm-3"><?php echo $key; ?></dt><dd class="col-sm-9"><?php echo $value; ?></dd>
+				<?php
 			}
 		?>
-	</div>
-	<div>Scheduled submission <span class="badge badge-pill badge-primary"><?php global $yotpo_scheduler; echo $yotpo_scheduler->get_scheduler(); ?></span></div>
+	</dl>
 </div>
