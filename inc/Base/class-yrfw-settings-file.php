@@ -44,9 +44,11 @@ class YRFW_Settings_File {
 	public function get_settings() {
 		if ( ! file_exists( self::$filename ) ) {
 			$this->set_settings( $this->get_default_settings(), false, false );
+			$settings = file_get_contents( self::$filename );
+		} else {
+			$settings = file_get_contents( self::$filename );
+			$settings = json_decode( $settings, true );
 		}
-		$settings           = file_get_contents( self::$filename );
-		$settings           = json_decode( $settings, true );
 		$settings['secret'] = get_option( 'yotpo_secret' );
 		return $settings;
 	}
@@ -129,6 +131,8 @@ class YRFW_Settings_File {
 			'timeframe_to'                 => 0,
 			'order_submission_method'      => 'hook',
 			'widget_jsinject_selector'     => 'section#primary',
+			'jsinject_selector_rating'     => '',
+			'jsinject_selector_qna'        => '',
 		];
 	}
 

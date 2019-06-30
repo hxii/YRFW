@@ -19,7 +19,20 @@ jQuery(document).ready(function() {
 		}
 	}
 	jQuery('#yotpo-location').change(function() { widget_location(); })
-	widget_location();
+	var rating_jsinject = function() {
+		if ( jQuery('#bottom_line_enabled_product').val() == 'jsinject' ) {
+			jQuery('#rating_selector').show();
+		} else {
+			jQuery('#rating_selector').hide();
+		}
+	}
+	var qna_jsinject = function() {
+		if ( jQuery('#qna_enabled_product').val() == 'jsinject' ) {
+			jQuery('#qna_selector').show();
+		} else {
+			jQuery('#qna_selector').hide();
+		}
+	}
 	var debug_level = function() {
 		if ( jQuery('#debug-enabled').length && jQuery('#debug-enabled')[0].checked ) {
 			jQuery('#debug_level').show();
@@ -27,7 +40,12 @@ jQuery(document).ready(function() {
 			jQuery('#debug_level').hide();
 		}
 	}
+	widget_location();
 	debug_level();
+	rating_jsinject();
+	qna_jsinject();
+	jQuery('#bottom_line_enabled_product').change(function() { rating_jsinject(); })
+	jQuery('#qna_enabled_product').change(function() { qna_jsinject(); })
 	jQuery('#debug-enabled').change(function() { debug_level(); })
 	jQuery('[data-toggle="tooltip"]').tooltip({container: '#bootstrap-wrapper', boundary: 'window'});
 })

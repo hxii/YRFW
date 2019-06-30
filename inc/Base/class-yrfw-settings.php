@@ -141,6 +141,8 @@ class YRFW_Settings {
 			'timeframe_to'                 => 0,
 			'order_submission_method'      => 'hook',
 			'widget_jsinject_selector'     => 'section#primary',
+			'jsinject_selector_rating'     => '',
+			'jsinject_selector_qna'        => '',
 		];
 	}
 

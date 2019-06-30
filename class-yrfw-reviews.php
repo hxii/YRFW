@@ -112,8 +112,8 @@ class YRFW_Reviews {
 		new YRFW_Assets();
 		new YRFW_Order_Column();
 		$yotpo_orders    = new YRFW_Orders();
-		$yotpo_products  = new YRFW_Products();
 		$yotpo_widgets   = new YRFW_Widgets();
+		$yotpo_products  = new YRFW_Products();
 		$yotpo_settings  = YRFW_Settings_File::get_instance();
 		$yotpo_scheduler = new YRFW_Scheduler();
 		$yotpo_actions   = new YRFW_Actions();

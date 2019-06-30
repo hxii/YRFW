@@ -7,7 +7,7 @@
 			<label for="appkey" class="sr-only"><?php esc_html_e( 'Appkey', 'yrfw' ); ?></label>
 			<input type="text" class="form-control rounded-0 border-bottom-0" id="appkey" name="appkey" placeholder="Your Appkey" value="<?php echo $settings['app_key']; ?>" <?php echo disabled( $settings['authenticated'], true ); ?> required>
 			<label for="secret" class="sr-only"><?php esc_html_e( 'Secret', 'yrfw' ); ?></label>
-			<input type="text" class="form-control rounded-0 border-top-0" id="secret" name="secret" placeholder="Your Secret" value="<?php echo str_repeat( '*', 6 ); ?>" <?php echo disabled( $settings['authenticated'], true ); ?> required>
+			<input type="text" class="form-control rounded-0 border-top-0" id="secret" name="secret" placeholder="Your Secret" value="<?php echo ( ( $settings['secret'] ) ? str_repeat( '*', 6 ) : '' ); ?>" <?php echo disabled( $settings['authenticated'], true ); ?> required>
 		</div>
 		<?php if ( ! $settings['authenticated'] ) : ?>
 			<button type="submit" class="btn btn-primary" <?php echo disabled( $settings['authenticated'], true ); ?> name="authenticate"><?php esc_html_e( 'Authenticate', 'yrfw' ); ?></button>

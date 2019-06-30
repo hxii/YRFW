@@ -13,7 +13,7 @@ class YRFW_Widgets {
 	 * @return string         widget html
 	 */
 	public static function main_widget( $check = true ) {
-		global $product, $yotpo_products, $yrfw_logger, $yotpo_cache;
+		global $product, $yotpo_cache;
 		$show_widget = is_product() ? $product->get_reviews_allowed() === true : true;
 		if ( $show_widget || ! $check ) {
 			$product_data = $yotpo_cache->get_cached_product( $product->get_id() );
@@ -28,7 +28,7 @@ class YRFW_Widgets {
 	 * @return string         q&a widget html
 	 */
 	public static function qa_bottomline( $check = true ) {
-		global $product, $yotpo_products, $yotpo_cache, $settings_instance;
+		global $product, $yotpo_cache, $settings_instance;
 		$show_bottom_line = is_product() ? $product->get_reviews_allowed() === true : true;
 		if ( $show_bottom_line || ! $check ) {
 			$product_data = $yotpo_cache->get_cached_product( $product->get_id() );
@@ -43,7 +43,7 @@ class YRFW_Widgets {
 	 * @return string         star rating widget html
 	 */
 	public static function bottomline( $check = true ) {
-		global $product, $yotpo_products, $yotpo_cache;
+		global $product, $yotpo_cache;
 		$show_bottom_line = is_product() ? $product->get_reviews_allowed() === true : true;
 		if ( $show_bottom_line || ! $check ) {
 			$product_data = $yotpo_cache->get_cached_product( $product->get_id() );
@@ -82,7 +82,7 @@ class YRFW_Widgets {
 			$html     = self::main_widget( false );
 			return '<script type="text/javascript" id="yotpo_jsinject_widget">
 			var e = jQuery("' . $selector . '");
-			var d = document.createElement("div");
+			var d = document.createElement("div"); 
 			var j = document.getElementById("yotpo_jsinject_widget");
 			d.innerHTML = "' . $html . '";
 			jQuery(d).appendTo(e);
@@ -94,26 +94,27 @@ class YRFW_Widgets {
 	/**
 	 * Get star/QA rating and inject via JS
 	 *
-	 * @param string $widget 'stars' for star rating and 'qa' for Q&A.
+	 * @param string $widget 'rating' for star rating and 'qa' for Q&A.
 	 * @return string
 	 */
 	public static function js_inject_rating( string $widget ) {
 		global $settings_instance;
 		if ( is_product() ) {
-			$selector = ! empty( $settings_instance['rating_jsinject_selector'] ) ? $settings_instance['rating_jsinject_selector'] : '.entry-summary';
-			// $html     = self::bottomline( false );
-			if ( 'stars' === $widget ) {
+			$selector = ! empty( $settings_instance[ "jsinject_selector_$widget" ] ) ? $settings_instance[ "jsinject_selector_$widget" ] : '';
+			if ( 'rating' === $widget ) {
 				$html = self::bottomline( false );
-			} elseif ( 'qa' === $widget ) {
+			} elseif ( 'qna' === $widget ) {
 				$html = self::qa_bottomline( false );
 			}
-			return '<script type="text/javascript" id="yotpo_jsinject_rating">
+			return '<script type="text/javascript" id="yotpo_jsinject_' . $widget . '">
 			var e = jQuery("' . $selector . '");
 			var d = document.createElement("div");
-			var j = document.getElementById("yotpo_jsinject_rating");
+			d.setAttribute("id", "yotpo_jsinject_' . $widget . '");
+			var j = document.getElementById("yotpo_jsinject_' . $widget . '");
 			d.innerHTML = "' . $html . '";
 			// jQuery(d).appendTo(e);
-			jQuery(".entry-title").after(d);
+			// jQuery("' . $selector . ' ").after(d);
+			e.after(d);
 			j.parentNode.removeChild(j);
 			</script>';
 		}

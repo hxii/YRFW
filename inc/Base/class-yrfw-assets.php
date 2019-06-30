@@ -20,7 +20,8 @@ class YRFW_Assets {
 	 * @return void
 	 */
 	private function load_assets() {
-		if ( ! is_admin() ) {
+		global $settings_instance;
+		if ( ! is_admin() && true === $settings_instance['authenticated'] ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'assets_load_frontend' ), 5 );
 		} else {
 			add_action( 'admin_enqueue_scripts', array( $this, 'assets_load_admin' ), 5 );
@@ -75,10 +76,12 @@ class YRFW_Assets {
 	 * @return void
 	 */
 	public function assets_prefetch_yotpo() {
-		echo '<link rel="dns-prefetch" href="//staticw2.yotpo.com">';
-		echo '<link rel="dns-prefetch" href="//staticw2.yotpo.com/batch">';
-		echo '<link rel="dns-prefetch" href="//api.yotpo.com">';
-		echo '<link rel="dns-prefetch" href="//w2.yotpo.com">';
+		// echo '<link rel="dns-prefetch" href="//staticw2.yotpo.com">';
+		echo '<link rel="preconnect" href="//staticw2.yotpo.com">';
+		// echo '<link rel="dns-prefetch" href="//staticw2.yotpo.com/batch">';
+		echo '<link rel="preconnect" href="//staticw2.yotpo.com/batch">';
+		echo '<link rel="preconnect" href="//api.yotpo.com">';
+		echo '<link rel="preconnect" href="//w2.yotpo.com">';
 	}
 
 	/**
@@ -90,6 +93,7 @@ class YRFW_Assets {
 		$version = get_transient( 'yotpo_widget_version' );
 		if ( ! $version ) {
 			global $settings_instance;
+			if ( empty( $settings_instance['app_key'] ) ) { return; }
 			$version = json_decode( file_get_contents('https://api.yotpo.com/widgetsmanager/v1/' . $settings_instance['app_key'] . '/account_widgets'), true )['account_widgets'][0]['widget_semantic_version'] ?? '';
 			set_transient( 'yotpo_widget_version', $version, HOUR_IN_SECONDS );
 		}

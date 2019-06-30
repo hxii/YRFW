@@ -15,6 +15,7 @@ __It is very important to note that this is STILL work in progress, and things M
 - DNS prefetch of Yotpo assets.
 - Preload of `widget.js` and `widget.css` assets.
 - New configurable method of main widget injection (via jQuery); star rating and Q&A to be added later.
+- Debug page returns `tail -n 50` with the ability to download the entire log.
 
 #### Back-end changes
 ##### Code changes
@@ -46,3 +47,4 @@ __It is very important to note that this is STILL work in progress, and things M
 - Native review exporter has been rewritten and should now be much faster.
 - Order chunks for past order submission have been increased to 300 orders.
 - Product description is no longer sent as it is unused.
+- To expedite support, debug information can be retrieved using a hashed string by accessing `yotpo_debug_settings`.
