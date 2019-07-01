@@ -117,13 +117,16 @@ class YRFW_Orders {
 			$yrfw_logger->debug( 'Getting product data took ' . ( microtime( true ) - $product_time ) . ' seconds.' );
 			$product_data            =& $_product;
 			$product_data['app_key'] = $settings_instance['app_key'];
-			$product_data['price']   = ( $product_data['price'] ?: 0 ) * $quantity; // WIP - To be fixed.
+			$product_data['price']   = ( $product_data['price'] ?? 0 ) * $quantity; // WIP - To be fixed.
 			if ( 0 !== $variation_id ) {
 				$product_data['custom_properties']['name']  = 'variant';
 				$product_data['custom_properties']['value'] = ( wc_get_product( $variation_id ) )->get_name();
 			}
 			$products_arr[ $item['product_id'] ] = $product_data;
 			$yrfw_logger->debug( "├─ Product: $product_data[name], ID: $product_id, Price: $product_data[price] $order_data[currency], Quantity: $item[qty], Image: $product_data[image]" );
+			if ( isset( $product_data['custom_properties'] ) ) {
+				$yrfw_logger->debug( '└── Variation: ' . $product_data['custom_properties']['value'] );
+			}
 		}
 		$order_data['products'] = $products_arr;
 		unset( $specs, $products_arr, $order, $items );

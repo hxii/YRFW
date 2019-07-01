@@ -31,6 +31,7 @@
 		<div class="form-group">
 			<button type="submit" name="submit_past_orders" id="submit_past_orders" class="btn btn-info" <?php disabled( $settings['show_submit_past_orders'], false, true ); ?>><?php esc_html_e( 'Submit past orders', 'yrfw' ); ?></button>
 			<small class="form-text text-muted"><?php esc_html_e( 'Submit all past fulfilled orders for the previous 90 days to Yotpo.', 'yrfw' ); ?></small>
+			<small class="form-text text-muted"><strong><?php esc_html_e( 'It is advisable to turn off plugins like "Query Monitor" while running this process.', 'yrfw' ); ?></strong></small>
 		</div>
 		<hr>
 		<div class="form-group custom-control custom-switch">

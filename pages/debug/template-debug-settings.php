@@ -7,7 +7,6 @@
 	<hr>
 	<div class="d-flex flex-wrap">
 	<?php
-	// $settings = $yotpo_settings->get_settings();
 	$settings = ( YRFW_Settings_File::get_instance() )->get_settings();
 	foreach ( $settings as $key => $value ) {
 		if ( $key === 'secret' ) { continue; }

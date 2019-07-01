@@ -26,7 +26,9 @@ class YRFW_Actions {
 			} elseif ( 'jsinject' === $settings_instance['qna_enabled_product'] ) {
 				add_action( 'wp_footer', array( $this, 'action_js_inject_qa' ) );
 			}
-			add_action( 'woocommerce_after_shop_loop_item', array( $this, 'action_show_star_rating_widget' ), 5 );// add if statment.
+			if ( true === $settings_instance['bottom_line_enabled_category'] ) {
+				add_action( 'woocommerce_after_shop_loop_item', array( $this, 'action_show_star_rating_widget' ), 5 );
+			}
 			add_action( 'yotpo_scheduler_action', array( $this, 'action_perform_scheduler' ) );
 			add_action( 'wp_dashboard_setup', array( $this, 'action_show_dashboard_widget' ) );
 			add_action( 'woocommerce_thankyou', array( $this, 'action_show_conversion_tracking' ), 1, 1 );

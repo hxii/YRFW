@@ -67,7 +67,7 @@ class YRFW_Settings_File {
 		global $yotpo_scheduler;
 		if ( true === $process ) {
 			foreach ( $settings as $key => $value ) {
-				if ( 'true' === $value ) {
+				if ( 'true' === $value || '1' === $value ) {
 					$settings[ $key ] = true;
 				} elseif ( 'false' === $value ) {
 					$settings[ $key ] = false;
@@ -91,9 +91,11 @@ class YRFW_Settings_File {
 		$settings = wp_json_encode( $settings, JSON_PRETTY_PRINT );
 		file_put_contents( self::$filename, $settings );
 		if ( 'schedule' === $sched ) {
-			// $yotpo_scheduler->set_scheduler();
-			var_dump( $yotpo_scheduler->set_scheduler() );
+			$yotpo_scheduler->set_scheduler();
 		} elseif ( 'schedule' !== $sched ) {
+			if ( ! isset( $yotpo_scheduler ) ) {
+				$yotpo_scheduler = new YRFW_Scheduler();
+			}
 			$yotpo_scheduler->clear_scheduler();
 		}
 	}
@@ -175,7 +177,7 @@ class YRFW_Settings_File {
 			'secret'        => $secret,
 			'authenticated' => true,
 		];
-		$this->set_settings( $settings, false, true );
+		$this->set_settings( $settings, true, true );
 		return true;
 	}
 }

@@ -54,7 +54,7 @@ class Hxii_Logger {
 	}
 
 	public function title( string $string ) {
-		$loggerstring = "══ $string " . str_repeat( '═', ( 80 - strlen( $string ) ) );
+		$loggerstring = "═╡ $string ╞" . str_repeat( '═', ( 120 - strlen( $string ) ) );
 		$this->write_to_file( $loggerstring, 'debug', 'D' );
 	}
 
@@ -80,7 +80,6 @@ class Hxii_Logger {
 	private function write_to_file( $string, $level, $let ) {
 		if ( self::LEVELS[ $level ] <= self::LEVELS[ $this->loglevel ] ) {
 			$time = date( $this->date_format );
-			// $fh = fopen( $this->filepath, 'a+' );
 			$debug_line = print_r( debug_backtrace( 2 )[1]['line'], true );
 			$debug_file = str_replace( YRFW_PLUGIN_PATH, '', print_r( debug_backtrace( 2 )[1]['file'], true ) );
 			$debug      = ( self::LEVELS[ $this->loglevel ] >= 999 ) ? "[$debug_file:$debug_line]" : '';
