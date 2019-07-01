@@ -117,7 +117,7 @@ class YRFW_Orders {
 			$yrfw_logger->debug( 'Getting product data took ' . ( microtime( true ) - $product_time ) . ' seconds.' );
 			$product_data            =& $_product;
 			$product_data['app_key'] = $settings_instance['app_key'];
-			$product_data['price']   = ( $product_data['price'] ?? 0 ) * $quantity; // WIP - To be fixed.
+			$product_data['price']   = ( $product_data['price'] ?: 0 ) * $quantity; // WIP - To be fixed.
 			if ( 0 !== $variation_id ) {
 				$product_data['custom_properties']['name']  = 'variant';
 				$product_data['custom_properties']['value'] = ( wc_get_product( $variation_id ) )->get_name();

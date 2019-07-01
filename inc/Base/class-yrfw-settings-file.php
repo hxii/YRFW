@@ -43,7 +43,11 @@ class YRFW_Settings_File {
 	 */
 	public function get_settings() {
 		if ( ! file_exists( self::$filename ) ) {
-			$this->set_settings( $this->get_default_settings(), false, false );
+			if ( get_option( 'yotpo_settings' ) ) {
+				$this->migrate_settings();
+			} else {
+				$this->set_settings( $this->get_default_settings(), false, false );
+			}
 			$settings = file_get_contents( self::$filename );
 		} else {
 			$settings = file_get_contents( self::$filename );
@@ -147,7 +151,8 @@ class YRFW_Settings_File {
 		$settings = get_option( 'yotpo_settings' );
 		add_option( 'yotpo_secret', $settings['secret'] );
 		delete_option( 'yotpo_settings' );
-		$this->set_settings( $settings, false, false );
+		$this->set_settings( $this->get_default_settings(), false, false );
+		$this->set_settings( $settings, false, true );
 	}
 
 	/**
