@@ -37,6 +37,7 @@ require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-assets.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-logger.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-exporter.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-settings-file.php';
+require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-rich-snippets.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Orders/class-yrfw-products.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Orders/class-yrfw-orders.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Orders/class-yrfw-past-orders.php';
@@ -106,7 +107,7 @@ class YRFW_Reviews {
 	 * @return void
 	 */
 	private function init() {
-		global $yotpo_settings, $yotpo_scheduler, $yotpo_actions, $yotpo_products, $yotpo_widgets, $yotpo_orders;
+		global $yotpo_settings, $yotpo_scheduler, $yotpo_actions, $yotpo_products, $yotpo_widgets, $yotpo_orders, $yotpo_richsnippets;
 		define( 'YRFW_CURRENCY', get_woocommerce_currency() );
 		new YRFW_Admin();
 		new YRFW_Assets();
@@ -117,6 +118,7 @@ class YRFW_Reviews {
 		$yotpo_settings  = YRFW_Settings_File::get_instance();
 		$yotpo_scheduler = new YRFW_Scheduler();
 		$yotpo_actions   = new YRFW_Actions();
+		$yotpo_richsnippets = new YRFW_Rich_Snippets();
 	}
 
 	/**

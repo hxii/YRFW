@@ -86,6 +86,8 @@ class YRFW_Admin {
 					'Widget Version'       => ( $transient = get_transient( 'yotpo_widget_version' ) ) ? $transient : 'null',
 					'Scheduled Submission' => ( $sched     = $yotpo_scheduler->get_scheduler() ) ? $sched : 'null',
 					'Products Cache'       => YRFW_PLUGIN_URL . '/products.json',
+					'Settings File'        => YRFW_PLUGIN_URL . '/settings.json',
+					'Last Submitted Order' => ( get_transient( 'yotpo_last_sent_order' ) ),
 				];
 				die( json_encode( $debug_info_array, JSON_PRETTY_PRINT ) );
 			}

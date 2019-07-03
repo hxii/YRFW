@@ -32,6 +32,7 @@ class YRFW_Actions {
 			add_action( 'yotpo_scheduler_action', array( $this, 'action_perform_scheduler' ) );
 			// add_action( 'wp_dashboard_setup', array( $this, 'action_show_dashboard_widget' ) ); // Disabled until further notice ¯\_(ツ)_/¯
 			add_action( 'woocommerce_thankyou', array( $this, 'action_show_conversion_tracking' ), 1, 1 );
+			add_action( 'woocommerce_after_single_product', array( $this, 'action_show_rich_snippets' ) );
 			switch ( $settings_instance['widget_location'] ) {
 				case 'footer':
 					add_action( 'woocommerce_after_single_product', array( $this, 'action_show_main_widget' ) );
@@ -199,5 +200,10 @@ class YRFW_Actions {
 				return $tabs;
 			}, 99 );
 		}
+	}
+
+	public function action_show_rich_snippets() {
+		global $yotpo_richsnippets;
+		return $yotpo_richsnippets->do_richsnippet();
 	}
 }

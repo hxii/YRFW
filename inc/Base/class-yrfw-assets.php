@@ -76,9 +76,7 @@ class YRFW_Assets {
 	 * @return void
 	 */
 	public function assets_prefetch_yotpo() {
-		// echo '<link rel="dns-prefetch" href="//staticw2.yotpo.com">';
 		echo '<link rel="preconnect" href="//staticw2.yotpo.com">';
-		// echo '<link rel="dns-prefetch" href="//staticw2.yotpo.com/batch">';
 		echo '<link rel="preconnect" href="//staticw2.yotpo.com/batch">';
 		echo '<link rel="preconnect" href="//api.yotpo.com">';
 		echo '<link rel="preconnect" href="//w2.yotpo.com">';
