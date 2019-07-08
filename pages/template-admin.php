@@ -1,9 +1,6 @@
 <?php
 global $yotpo_settings, $yotpo_cache, $yotpo_orders;
-$yotpo_orders->get_token_from_cache();
-$settings = (YRFW_Settings_File::get_instance())->get_settings();
-$sched = new YRFW_Scheduler();
-$sched->clear_scheduler();
+$settings = ( $yotpo_settings->get_instance() )->get_settings();
 // Move to Widgets tab if authenticated.
 if ( $settings['authenticated'] ) {
 	echo( '<script>jQuery(document).ready(function(){jQuery("#yotpo-widgets > a").click();})</script>' ); }
@@ -34,7 +31,6 @@ if ( isset( $_POST['action'] ) && wp_verify_nonce( $_POST['yotpo_login_form'], '
 		$yotpo_settings->set_settings( [ 'show_submit_past_orders' => false ], true, true );
 	} elseif ( isset( $_POST['update_settings'] ) ) {
 		$yotpo_settings->set_settings( $_POST, true, true );
-		// $settings = $yotpo_settings->get_settings();
 	}
 	$settings = $yotpo_settings->get_settings();
 // Help Form.
@@ -83,6 +79,5 @@ if ( isset( $_POST['action'] ) && wp_verify_nonce( $_POST['yotpo_login_form'], '
 		</div> <!-- tabs -->
 		<div id="yrfw-version" class="version badge badge-dark float-right mt-2">Yotpo <?php echo YRFW_PLUGIN_VERSION; ?></div>
 		<?php echo ( '02-14' === date( 'm-d' ) ) ? '<div class="float-left" title="It\'s Paul\'s birthday">&#127867;</div>' : ''; ?>
-		<pre><?php var_dump($_POST); ?></pre>
 	</div>
 </div> <!-- wrap -->

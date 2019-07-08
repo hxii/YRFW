@@ -31,22 +31,24 @@
 		<div class="form-group">
 			<button type="submit" name="submit_past_orders" id="submit_past_orders" class="btn btn-info" <?php disabled( $settings['show_submit_past_orders'], false, true ); ?>><?php esc_html_e( 'Submit past orders', 'yrfw' ); ?></button>
 			<small class="form-text text-muted"><?php esc_html_e( 'Submit all past fulfilled orders for the previous 90 days to Yotpo.', 'yrfw' ); ?></small>
+			<small class="form-text text-muted"><strong><?php esc_html_e( 'It is advisable to turn off plugins like "Query Monitor" while running this process.', 'yrfw' ); ?></strong></small>
 		</div>
 		<hr>
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="debug_mode" value=false>
-			<input type="checkbox" class="custom-control-input" name="debug_mode" id="debug-enabled" <?= checked( $settings['debug_mode'], true, false ); ?> value=true>
+			<input type="checkbox" class="custom-control-input" name="debug_mode" id="debug-enabled" <?php echo checked( $settings['debug_mode'], true, false ); ?> value=true>
 			<label class="custom-control-label text-danger" for="debug-enabled"><?php esc_html_e( 'Enable debugging mode?', 'yrfw' ); ?></label>
 			<small class="form-text text-muted"><?php esc_html_e( 'Enable logging and debugging for the Yotpo plugin.', 'yrfw' ); ?></small>
 		</div>
 		<div class="input-group" id="debug_level">
 			<select class="custom-select" id="debug_level_choice" name="debug_level" style="-webkit-appearance: none;">
-				<option value="info" <?= selected( $settings['debug_level'], 'info', false ); ?>>info</option>
-				<option value="warning" <?= selected( $settings['debug_level'], 'warning', false ); ?>>warning</option>
-				<option value="debug" <?= selected( $settings['debug_level'], 'debug', false ); ?>>debug</option>
+				<option value="info" <?php echo selected( $settings['debug_level'], 'info', false ); ?>>info</option>
+				<option value="warning" <?php echo selected( $settings['debug_level'], 'warning', false ); ?>>warning</option>
+				<option value="debug" <?php echo selected( $settings['debug_level'], 'debug', false ); ?>>debug</option>
 			</select>
 			<div class="input-group-append">
-				<button class="btn btn-outline-secondary" type="button"><?php esc_html_e( 'Download Log', 'yrfw' ); ?></button>
+				<!-- <button class="btn btn-outline-secondary" type="button"><?php //esc_html_e( 'Download Log', 'yrfw' ); ?></button> -->
+				<a href="<?php global $yrfw_logger; echo YRFW_PLUGIN_URL . '/' . $yrfw_logger->get_filename( true ); ?>" class="btn btn-outline-secondary"><?php esc_html_e( 'Download Log', 'yrfw' ); ?></a>
 				<a href="<?php echo admin_url( 'admin.php?page=yotpo-debug' ); ?>" class="btn btn-outline-primary"><?php esc_html_e( 'Open debug', 'yrfw' ); ?></a>
 			</div>
 		</div>

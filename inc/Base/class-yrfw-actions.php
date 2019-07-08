@@ -12,32 +12,41 @@ class YRFW_Actions {
 	 */
 	public function __construct() {
 		global $settings_instance;
-		add_action( 'init', array( $this, 'action_generate_product_cache' ), 9999 );
-		add_action( 'woocommerce_order_status_changed', array( $this, 'action_submit_order' ), 99, 1 );
-		add_filter( 'comments_open', array( $this, 'action_disable_reviews' ), null, 2 );
-		if ( $settings_instance['bottom_line_enabled_product'] ) {
-			add_action( 'woocommerce_single_product_summary', array( $this, 'action_show_star_rating_widget' ), 5 ); // add if statment.
-		} else {
-			add_action( 'wp_footer', array( $this, 'action_js_inject_star_rating' ) );
-		}
-		add_action( 'woocommerce_single_product_summary', array( $this, 'action_show_qa_widget' ), 6 );// add if statment.
-		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'action_show_star_rating_widget' ), 5 );// add if statment.
-		add_action( 'yotpo_scheduler_action', array( $this, 'action_perform_scheduler' ) );
-		add_action( 'wp_dashboard_setup', array( $this, 'action_show_dashboard_widget' ) );
-		add_action( 'woocommerce_thankyou', array( $this, 'action_show_conversion_tracking' ), 1, 1 );
-		switch ( $settings_instance['widget_location'] ) {
-			case 'footer':
-				add_action( 'woocommerce_after_single_product', array( $this, 'action_show_main_widget' ) );
-				break;
-			case 'tab':
-				add_action( 'woocommerce_product_tabs', array( $this, 'action_show_main_widget_tab' ) );
-				add_filter( 'woocommerce_tab_manager_integration_tab_allowed', function() { return false; } );
-				break;
-			case 'jsinject': // @TODO: add setting?
-				add_action( 'wp_footer', array( $this, 'action_js_inject_widget' ) );
-				break;
-			default:
-				break;
+		if ( true === $settings_instance['authenticated'] ) {
+			add_action( 'init', array( $this, 'action_disable_reviews' ), 10 );
+			add_action( 'init', array( $this, 'action_generate_product_cache' ), 9999 );
+			add_action( 'woocommerce_order_status_changed', array( $this, 'action_submit_order' ), 99, 1 );
+			if ( true === $settings_instance['bottom_line_enabled_product'] ) {
+				add_action( 'woocommerce_single_product_summary', array( $this, 'action_show_star_rating_widget' ), 5 ); // add if statment.
+			} elseif ( 'jsinject' === $settings_instance['bottom_line_enabled_product'] ) {
+				add_action( 'wp_footer', array( $this, 'action_js_inject_star_rating' ) );
+			}
+			if ( true === $settings_instance['qna_enabled_product'] ) {
+				add_action( 'woocommerce_single_product_summary', array( $this, 'action_show_qa_widget' ), 6 );// add if statment.
+			} elseif ( 'jsinject' === $settings_instance['qna_enabled_product'] ) {
+				add_action( 'wp_footer', array( $this, 'action_js_inject_qa' ) );
+			}
+			if ( true === $settings_instance['bottom_line_enabled_category'] ) {
+				add_action( 'woocommerce_after_shop_loop_item', array( $this, 'action_show_star_rating_widget' ), 5 );
+			}
+			add_action( 'yotpo_scheduler_action', array( $this, 'action_perform_scheduler' ) );
+			// add_action( 'wp_dashboard_setup', array( $this, 'action_show_dashboard_widget' ) ); // Disabled until further notice ¯\_(ツ)_/¯
+			add_action( 'woocommerce_thankyou', array( $this, 'action_show_conversion_tracking' ), 1, 1 );
+			add_action( 'woocommerce_after_single_product', array( $this, 'action_show_rich_snippets' ) );
+			switch ( $settings_instance['widget_location'] ) {
+				case 'footer':
+					add_action( 'woocommerce_after_single_product', array( $this, 'action_show_main_widget' ) );
+					break;
+				case 'tab':
+					add_action( 'woocommerce_product_tabs', array( $this, 'action_show_main_widget_tab' ) );
+					add_filter( 'woocommerce_tab_manager_integration_tab_allowed', function() { return false; } );
+					break;
+				case 'jsinject': // @TODO: add setting?
+					add_action( 'wp_footer', array( $this, 'action_js_inject_widget' ) );
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
@@ -101,7 +110,17 @@ class YRFW_Actions {
 	 */
 	public function action_js_inject_star_rating() {
 		global $yotpo_widgets;
-		echo $yotpo_widgets->js_inject_rating( 'stars' );
+		echo $yotpo_widgets->js_inject_rating( 'rating' );
+	}
+
+	/**
+	 * Show star rating using JS injection
+	 *
+	 * @return void
+	 */
+	public function action_js_inject_qa() {
+		global $yotpo_widgets;
+		echo $yotpo_widgets->js_inject_rating( 'qna' );
 	}
 
 	/**
@@ -169,17 +188,22 @@ class YRFW_Actions {
 	/**
 	 * Disable native reviews system
 	 *
-	 * @param  bool $open    are comments allowed.
-	 * @param  int  $post_id post (product) id.
-	 * @return bool          should we show native reviews.
+	 * @return void
 	 */
-	public function action_disable_reviews( $open, $post_id ) {
+	public function action_disable_reviews() {
 		global $settings_instance;
-		if ( $settings_instance['disable_native_review_system'] ) {
-			if ( get_post_type( $post_id ) === 'product' ) {
-				return false;
-			}
-			return $open;
+		if ( true === $settings_instance['disable_native_review_system'] ) {
+			remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating' );
+			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating' );
+			add_filter( 'woocommerce_product_tabs', function( $tabs ) {
+				unset( $tabs['reviews'] );
+				return $tabs;
+			}, 99 );
 		}
+	}
+
+	public function action_show_rich_snippets() {
+		global $yotpo_richsnippets;
+		return $yotpo_richsnippets->do_richsnippet();
 	}
 }

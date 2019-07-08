@@ -6,17 +6,18 @@ $settings = (YRFW_Settings_File::get_instance())->get_settings();
 
 if ( ! current_user_can( 'administrator' ) ) { wp_die(); }
 
-if ( isset( $_POST ) ) {
-	echo '<pre>' . var_export( $_POST ) . '</pre>';
-}
-
-if ( isset( $_POST['reset_settings'] ) && wp_verify_nonce( $_POST['yotpo_debug_reset'], 'reset' ) ) {
+if ( isset( $_POST['reset_settings'] ) && wp_verify_nonce( $_POST['yotpo_debug_settings'], 'settings' ) ) {
 	if ( YRFW_Settings::reset_settings( false ) ) {
 		new YRFW_Messages( 'Reset successful!', 'success', true, true );
 	}
 } elseif ( isset( $_POST['update_settings'] ) ) {
 	$settings_instance = YRFW_Settings_File::get_instance();
 	$settings_instance->set_settings( $_POST, true, true );
+} elseif ( isset( $_POST['reset_debug_log'] ) && wp_verify_nonce( $_POST['debug_log'], 'debug' ) ) {
+	global $yrfw_logger;
+	$yrfw_logger->reset_log();
+} elseif ( isset( $_POST['reset_widget'] ) && wp_verify_nonce( $_POST['yotpo_debug_settings'], 'settings' ) ) {
+	delete_transient( 'yotpo_widget_version' );
 }
 
 ?>

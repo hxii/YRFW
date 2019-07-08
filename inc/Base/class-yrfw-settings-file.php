@@ -43,10 +43,16 @@ class YRFW_Settings_File {
 	 */
 	public function get_settings() {
 		if ( ! file_exists( self::$filename ) ) {
-			$this->set_settings( $this->get_default_settings(), false, false );
+			if ( get_option( 'yotpo_settings' ) ) {
+				$this->migrate_settings();
+			} else {
+				$this->set_settings( $this->get_default_settings(), false, false );
+			}
+			$settings = file_get_contents( self::$filename );
+		} else {
+			$settings = file_get_contents( self::$filename );
+			$settings = json_decode( $settings, true );
 		}
-		$settings           = file_get_contents( self::$filename );
-		$settings           = json_decode( $settings, true );
 		$settings['secret'] = get_option( 'yotpo_secret' );
 		return $settings;
 	}
@@ -65,7 +71,7 @@ class YRFW_Settings_File {
 		global $yotpo_scheduler;
 		if ( true === $process ) {
 			foreach ( $settings as $key => $value ) {
-				if ( 'true' === $value ) {
+				if ( 'true' === $value || '1' === $value ) {
 					$settings[ $key ] = true;
 				} elseif ( 'false' === $value ) {
 					$settings[ $key ] = false;
@@ -89,9 +95,11 @@ class YRFW_Settings_File {
 		$settings = wp_json_encode( $settings, JSON_PRETTY_PRINT );
 		file_put_contents( self::$filename, $settings );
 		if ( 'schedule' === $sched ) {
-			// $yotpo_scheduler->set_scheduler();
-			var_dump( $yotpo_scheduler->set_scheduler() );
+			$yotpo_scheduler->set_scheduler();
 		} elseif ( 'schedule' !== $sched ) {
+			if ( ! isset( $yotpo_scheduler ) ) {
+				$yotpo_scheduler = new YRFW_Scheduler();
+			}
 			$yotpo_scheduler->clear_scheduler();
 		}
 	}
@@ -129,6 +137,8 @@ class YRFW_Settings_File {
 			'timeframe_to'                 => 0,
 			'order_submission_method'      => 'hook',
 			'widget_jsinject_selector'     => 'section#primary',
+			'jsinject_selector_rating'     => '',
+			'jsinject_selector_qna'        => '',
 		];
 	}
 
@@ -141,7 +151,8 @@ class YRFW_Settings_File {
 		$settings = get_option( 'yotpo_settings' );
 		add_option( 'yotpo_secret', $settings['secret'] );
 		delete_option( 'yotpo_settings' );
-		$this->set_settings( $settings, false, false );
+		$this->set_settings( $this->get_default_settings(), false, false );
+		$this->set_settings( $settings, false, true );
 	}
 
 	/**
@@ -171,7 +182,7 @@ class YRFW_Settings_File {
 			'secret'        => $secret,
 			'authenticated' => true,
 		];
-		$this->set_settings( $settings, false, true );
+		$this->set_settings( $settings, true, true );
 		return true;
 	}
 }

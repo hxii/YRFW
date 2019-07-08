@@ -124,6 +124,9 @@ class YRFW_Orders {
 			}
 			$products_arr[ $item['product_id'] ] = $product_data;
 			$yrfw_logger->debug( "├─ Product: $product_data[name], ID: $product_id, Price: $product_data[price] $order_data[currency], Quantity: $item[qty], Image: $product_data[image]" );
+			if ( isset( $product_data['custom_properties'] ) ) {
+				$yrfw_logger->debug( '└── Variation: ' . $product_data['custom_properties']['value'] );
+			}
 		}
 		$order_data['products'] = $products_arr;
 		unset( $specs, $products_arr, $order, $items );

@@ -22,23 +22,33 @@
 		<div class="collapse" id="tab_custom_location">
 			<div class="card card-body">
 				<?php esc_html_e( 'In order to show the main Yotpo widget in a custom location, you can use the following function:', 'yrfw' ); ?>
-				<pre>function() { $widgets = new YRFW_Widgets; $widgets->main_widget(); }</pre>
+				<pre>function() { $widgets = new YRFW_Widgets; echo $widgets->main_widget(); }</pre>
 				<?php esc_html_e( 'Take note this is an example, and it is advised to seek the help of a developer.', 'yrfw' ); ?>
 			</div>
 		</div>
-		<div class="form-group custom-control custom-switch">
-			<input type="hidden" name="bottom_line_enabled_product" value="false">
-			<input type="checkbox" class="custom-control-input" value="true" name="bottom_line_enabled_product" <?php echo checked( true, $settings['bottom_line_enabled_product'], false ); ?> id="bottom_line_enabled_product">
-			<label class="custom-control-label" for="bottom_line_enabled_product"><?php esc_html_e( 'Show star rating on product pages?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Rating in product pages looks like this <img src='http://wcdev.local/wp-content/plugins/yotpo-dev/assets/images/product-bottomline.png' style='display:block;width:150px;' width='150px'>"></span></label>
-			<div id="stars_jsinject" style="display: none">
-				<input type="checkbox" class="custom-control-input" value="true" name="stars_jsinject_check" id="stars_jsinject_check">
-				<label class="custom-control-label" for="stars_jsinject_check">Try injecting with JS?</label>
+		<div class="form-group">
+			<label for="bottom_line_enabled_product"><?php esc_html_e( 'Show star rating on product pages?', 'yrfw' ); ?></label>
+			<select class="form-control col-2" id="bottom_line_enabled_product" name="bottom_line_enabled_product">
+				<option value="true" <?php echo selected( $settings['bottom_line_enabled_product'], true, false ); ?>><?php esc_html_e( 'Enabled', 'yrfw' ); ?></option>
+				<option value="false" <?php echo selected( $settings['bottom_line_enabled_product'], false, false ); ?>><?php esc_html_e( 'Disabled', 'yrfw' ); ?></option>
+				<option value="jsinject" <?php echo selected( $settings['bottom_line_enabled_product'], 'jsinject', false ); ?>>JS Inject (Beta)</option>
+			</select>
+			<div class="form-group" style="display: none;" id="rating_selector">
+				<label for="widget_tab_name"><?php esc_html_e( 'Please type in the selector to use (jQuery)', 'yrfw' ); ?></label>
+				<input type="text" class="form-control" name="jsinject_selector_rating" placeholder="jQuery Selector" value="<?php echo $settings['jsinject_selector_rating'] ?: '.entry-title' ?>" id="jsinject_selector_rating">
 			</div>
 		</div>
-		<div class="form-group custom-control custom-switch">
-			<input type="hidden" name="qna_enabled_product" value="false">
-			<input type="checkbox" class="custom-control-input" value="true" name="qna_enabled_product" <?php echo checked( true, $settings['qna_enabled_product'], false ); ?> id="qna_enabled_product">
-			<label class="custom-control-label" for="qna_enabled_product"><?php esc_html_e( 'Show Q&A rating on product pages?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Q&A rating looks like this"></span></label>
+		<div class="form-group">
+			<label for="qna_enabled_product"><?php esc_html_e( 'Show Q&A rating on product pages?', 'yrfw' ); ?></label>
+			<select class="form-control col-2" id="qna_enabled_product" name="qna_enabled_product">
+				<option value="true" <?php echo selected( $settings['qna_enabled_product'], true, false ); ?>><?php esc_html_e( 'Enabled', 'yrfw' ); ?></option>
+				<option value="false" <?php echo selected( $settings['qna_enabled_product'], false, false ); ?>><?php esc_html_e( 'Disabled', 'yrfw' ); ?></option>
+				<option value="jsinject" <?php echo selected( $settings['qna_enabled_product'], 'jsinject', false ); ?>>JS Inject (Beta)</option>
+			</select>
+			<div class="form-group" style="display: none;" id="qna_selector">
+				<label for="widget_tab_name"><?php esc_html_e( 'Please type in the selector to use (jQuery)', 'yrfw' ); ?></label>
+				<input type="text" class="form-control" name="jsinject_selector_qna" placeholder="jQuery Selector" value="<?php echo $settings['jsinject_selector_qna'] ?: '.entry-title' ?>" id="jsinject_selector_qna">
+			</div>
 		</div>
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="bottom_line_enabled_category" value="false">
@@ -48,7 +58,7 @@
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="disable_native_review_system" value="false">
 			<input type="checkbox" class="custom-control-input" value="true" name="disable_native_review_system" <?php echo checked( true, $settings['disable_native_review_system'], false ); ?> id="disable_native_review_system">
-			<label class="custom-control-label" for="disable_native_review_system"><?php esc_html_e( 'Disable native reviews system?', 'yrfw' ); ?></label>
+			<label class="custom-control-label" for="disable_native_review_system"><?php esc_html_e( 'Disable native reviews system?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Enabling his option will disable the native reviews in WooCommerce."></span></label>
 		</div>
 		<hr>
 		<button type="submit" class="btn btn-primary" <?php echo disabled( $settings['authenticated'], false ); ?> name="widgets"><?php esc_html_e( 'Save Settings', 'yrfw' ); ?></button>
