@@ -4,12 +4,12 @@
 		<h2 class="text-muted"><?php esc_html_e( 'No problem! &#128526; Here are some useful resources.', 'yrfw' ); ?></h2>
 		<hr class="my-4">
 		<ul class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" href="https://support.yotpo.com/"><?php esc_html_e( 'Support Portal', 'yrfw' ); ?></a>
-			<a class="list-group-item list-group-item-action" href="https://yap.yotpo.com/#/?modal=contact_support"><?php esc_html_e( 'Contact Support', 'yrfw' ); ?></a>
-			<a class="list-group-item list-group-item-action" href="https://apidocs.yotpo.com/reference"><?php esc_html_e( 'API Documentation', 'yrfw' ); ?></a>
-			<a class="list-group-item list-group-item-action" href="https://www.yotpo.com/blog/yotpo-gdpr-guide/"><?php esc_html_e( 'GDPR at Yotpo', 'yrfw' ); ?></a>
-			<a class="list-group-item list-group-item-action" href="https://www.yotpo.com/release-notes/"><?php esc_html_e( 'Yotpo Release Notes', 'yrfw' ); ?></a>
-			<a class="list-group-item list-group-item-action list-group-item-warning" href="http://status.yotpo.com/"><?php esc_html_e( 'Yotpo Service Status', 'yrfw' ); ?></a>
+			<a class="list-group-item list-group-item-action" href="https://support.yotpo.com/" target="_blank"><?php esc_html_e( 'Support Portal', 'yrfw' ); ?></a>
+			<a class="list-group-item list-group-item-action" href="https://yap.yotpo.com/#/?modal=contact_support" target="_blank"><?php esc_html_e( 'Contact Support', 'yrfw' ); ?></a>
+			<a class="list-group-item list-group-item-action" href="https://apidocs.yotpo.com/reference" target="_blank"><?php esc_html_e( 'API Documentation', 'yrfw' ); ?></a>
+			<a class="list-group-item list-group-item-action" href="https://www.yotpo.com/blog/yotpo-gdpr-guide/" target="_blank"><?php esc_html_e( 'GDPR at Yotpo', 'yrfw' ); ?></a>
+			<a class="list-group-item list-group-item-action" href="https://www.yotpo.com/release-notes/" target="_blank"><?php esc_html_e( 'Yotpo Release Notes', 'yrfw' ); ?></a>
+			<a class="list-group-item list-group-item-action list-group-item-warning" href="http://status.yotpo.com/" target="_blank"><?php esc_html_e( 'Yotpo Service Status', 'yrfw' ); ?></a>
 		</ul>
 	</div>
 	<p>

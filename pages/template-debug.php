@@ -7,7 +7,7 @@ $settings = (YRFW_Settings_File::get_instance())->get_settings();
 if ( ! current_user_can( 'administrator' ) ) { wp_die(); }
 
 if ( isset( $_POST['reset_settings'] ) && wp_verify_nonce( $_POST['yotpo_debug_settings'], 'settings' ) ) {
-	if ( YRFW_Settings::reset_settings( false ) ) {
+	if ( $yotpo_settings->set_settings( $yotpo_settings->get_default_settings(), false, false ) ) {
 		new YRFW_Messages( 'Reset successful!', 'success', true, true );
 	}
 } elseif ( isset( $_POST['update_settings'] ) ) {

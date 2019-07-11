@@ -31,6 +31,7 @@ class YRFW_Orders {
 						$order_data['utoken']            = $api_token;
 						$order_data['platform']          = 'woocommerce';
 						$order_data['extension_version'] = YRFW_PLUGIN_VERSION;
+						$order_data['validate_data']     = false;
 						try {
 							$create_time = microtime( true );
 							$response    = $curl->submit_order( $order_data );
@@ -111,10 +112,8 @@ class YRFW_Orders {
 			$product_id   = ( 0 !== $parent_id ) ? $parent_id : $item['product_id'];
 			$variation_id = $item->get_variation_id();
 			$quantity     = $item['qty'];
-			$product_time = microtime( true );
 			$_product     = $yotpo_cache->get_cached_product( $product_id );
 			if ( ! $_product ) { return; }
-			$yrfw_logger->debug( 'Getting product data took ' . ( microtime( true ) - $product_time ) . ' seconds.' );
 			$product_data            =& $_product;
 			$product_data['app_key'] = $settings_instance['app_key'];
 			$product_data['price']   = ( $product_data['price'] ?: 0 ) * $quantity; // WIP - To be fixed.
