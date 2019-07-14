@@ -11,9 +11,9 @@ class YRFW_Past_Orders extends YRFW_Orders {
 	 * Instantiate image mapper class and get product images.
 	 */
 	public function __construct() {
-		global $product_images;
-		$image_map      = new YRFW_Image_Map();
-		$product_images = $image_map->get_images();
+		// global $product_images;
+		// $image_map      = new YRFW_Image_Map();
+		// $product_images = $image_map->get_images();
 	}
 
 	/**
@@ -68,6 +68,7 @@ class YRFW_Past_Orders extends YRFW_Orders {
 					'orders'            => $chunk,
 					'platform'          => 'woocommerce',
 					'extension_version' => YRFW_PLUGIN_VERSION,
+					'validate_data'     => false,
 				);
 			}
 			unset( $past_orders, $product_map );

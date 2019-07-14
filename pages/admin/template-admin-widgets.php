@@ -13,7 +13,7 @@
 		</div>
 		<div class="form-group" style="display: none;" id="tab_name">
 			<label for="widget_tab_name"><?php esc_html_e( 'Please choose a name for the reviews tab', 'yrfw' ); ?></label>
-			<input type="text" class="form-control" name="widget_tab_name" placeholder="Tab Name" value="<?php echo $settings['widget_tab_name'] ?: 'Reviews' ?>" id="widget_tab_name">
+			<input type="text" class="form-control col-5" name="widget_tab_name" placeholder="Tab Name" value="<?php echo $settings['widget_tab_name'] ?: 'Reviews' ?>" id="widget_tab_name">
 		</div>
 		<div class="form-group" style="display: none;" id="jsinject_selector">
 			<label for="widget_tab_name"><?php esc_html_e( 'Please type in the selector to use (jQuery)', 'yrfw' ); ?></label>
@@ -58,7 +58,7 @@
 		<div class="form-group custom-control custom-switch">
 			<input type="hidden" name="disable_native_review_system" value="false">
 			<input type="checkbox" class="custom-control-input" value="true" name="disable_native_review_system" <?php echo checked( true, $settings['disable_native_review_system'], false ); ?> id="disable_native_review_system">
-			<label class="custom-control-label" for="disable_native_review_system"><?php esc_html_e( 'Disable native reviews system?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Enabling his option will disable the native reviews in WooCommerce."></span></label>
+			<label class="custom-control-label" for="disable_native_review_system"><?php esc_html_e( 'Disable native reviews system?', 'yrfw' ); ?><span class="dashicons dashicons-editor-help" data-toggle="tooltip" data-placement="top" data-html="true" title="Enabling this option will attempt to disable the native reviews in WooCommerce product pages."></span></label>
 		</div>
 		<hr>
 		<button type="submit" class="btn btn-primary" <?php echo disabled( $settings['authenticated'], false ); ?> name="widgets"><?php esc_html_e( 'Save Settings', 'yrfw' ); ?></button>

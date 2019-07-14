@@ -48,3 +48,4 @@ __It is very important to note that this is STILL work in progress, and things M
 - Order chunks for past order submission have been increased to 300 orders.
 - Product description is no longer sent as it is unused.
 - To expedite support, debug information can be retrieved using a hashed string by accessing `yotpo_debug_settings`.
+- Rich Snippet markup will now appear on product pages.

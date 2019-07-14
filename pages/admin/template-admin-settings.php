@@ -4,7 +4,7 @@
 		<?php wp_nonce_field( 'settings', 'yotpo_settings_form' ) ?>
 		<div class="form-group">
 			<label for="yotpo_order_status"><?php esc_html_e( 'Order Status', 'yrfw' ); ?></label><span class="dashicons dashicons-editor-help" data-toggle="tooltip" title="<?php esc_html_e( 'The status which an order must be in order to submit it to Yotpo. Affects both order submission and past order submission.', 'yrfw' ); ?>"></span>
-			<select class="form-control" id="yotpo_order_status" name="yotpo_order_status">
+			<select class="form-control col-5" id="yotpo_order_status" name="yotpo_order_status">
 				<?php
 					$statuses = wc_get_order_statuses();
 					foreach ( $statuses as $k => $v ) {
