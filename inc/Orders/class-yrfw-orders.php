@@ -10,6 +10,7 @@ class YRFW_Orders {
 	 * @param  int  $order_id order ID to submit.
 	 * @param  bool $retry To prevent going into a loop, we will only try to get a new utoken once.
 	 * @return boolean        order submission success
+	 * @throws void Try and get new token in case of 401.
 	 */
 	public function submit_single_order( int $order_id, bool $retry = false ) {
 		global $yrfw_logger, $settings_instance;
@@ -63,7 +64,7 @@ class YRFW_Orders {
 	/**
 	 * Get single order information
 	 *
-	 * @param  int $order the order ID.
+	 * @param  object $order the order.
 	 * @return array product data array
 	 */
 	public function get_single_order_data( WC_Order $order ) {

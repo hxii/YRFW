@@ -49,4 +49,10 @@ class YRFW_API_Wrapper {
 		return $response->statusCode;
 	}
 
+	public function get_bottomline( int $product_id ) {
+		$this->curl->appendRequestHeader( 'Content-Type', 'application/json' );
+		$response = $this->curl->get( self::$base_uri . "products/$this->app_key/$product_id/bottomline" );
+		return $response->text;
+	}
+
 }
