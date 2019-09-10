@@ -26,7 +26,7 @@ class YRFW_Past_Orders extends YRFW_Orders {
 		global $yrfw_logger;
 		if ( isset( $timeframe['to'], $timeframe['from'] ) ) {
 			$yrfw_logger->debug( "Timeframe is from $timeframe[from] to $timeframe[to]" );
-			$args = array(
+			$args        = array(
 				'limit'        => -1,
 				'status'       => 'completed', // @ToDo: add custom status support
 				'type'         => 'shop_order',
@@ -92,7 +92,9 @@ class YRFW_Past_Orders extends YRFW_Orders {
 			$api = YRFW_API_Wrapper::get_instance();
 			$api->init( $settings_instance['app_key'], $settings_instance['secret'] );
 			$api_token = parent::get_token_from_cache( true );
-			if ( empty( $api_token ) ) { return; }
+			if ( empty( $api_token ) ) {
+				return;
+			}
 			foreach ( $past_orders as $index => $post_bulk ) if ( ! is_null( $post_bulk ) ) {
 				$post_bulk['utoken'] = $api_token;
 				$response            = $api->submit_orders( $post_bulk );
@@ -109,9 +111,9 @@ class YRFW_Past_Orders extends YRFW_Orders {
 			new YRFW_Messages( esc_html__( 'Past orders submitted successfully!', 'yrfw' ), 'success' );
 			$yrfw_logger->debug( 'Submitting past orders took ' . ( microtime( true ) - $time ) . ' seconds to complete.' );
 			$yrfw_logger->title( 'FINISHING PAST ORDER SUBMISSION' );
-			unset( $past_orders, $response, $api, $api_token, $PROD );
+			unset( $past_orders, $response, $api, $api_token );
 		} else {
-			$error_appkey = new YRFW_Messages( esc_html__( 'You have to set up your app key and secret!', 'yrfw' ), 'error' );
+			new YRFW_Messages( esc_html__( 'You have to set up your app key and secret!', 'yrfw' ), 'error' );
 		}
 	}
 

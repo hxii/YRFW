@@ -1,41 +1,55 @@
 <?php
 
 /**
- * @package  YotpoReviews
+ * CSV Exporter class
  */
-class YRFW_CSV_Helper {
-
-	private $reviews;
-	private $filename;
-	private $fh;
+abstract class YRFW_CSV_Helper {
 
 	/**
-	 * CSV Headers
-	 */
-	const ROWS = [
-		'review_title',
-		'review_content',
-		'display_name',
-		'user_email',
-		'review_score',
-		'date',
-		'sku',
-		'product_title',
-		'product_description',
-		'product_url',
-		'product_image_url',
-		'user_type',
-	];
-
-	/**
-	 * Init class with filename and reviews
+	 * Data array to be exported
 	 *
-	 * @param array $reviews reviews array to export.
+	 * @var array
 	 */
-	public function __construct( array $reviews ) {
-		$this->reviews  = &$reviews;
-		$this->filename = 'review_export_' . date( 'Y-m-d' ) . '.csv';
-		$this->fh       = fopen( YRFW_PLUGIN_PATH . $this->filename, 'w' );
+	private $data;
+	/**
+	 * Filename to be used
+	 *
+	 * @var string
+	 */
+	private $filename;
+	/**
+	 * File handler
+	 *
+	 * @var void
+	 */
+	private $fh;
+	/**
+	 * CSV Header
+	 *
+	 * @var array
+	 */
+	private $header_rows;
+
+	/**
+	 * Name of child class
+	 *
+	 * @var string
+	 */
+	private $child;
+
+	/**
+	 * Constructor
+	 *
+	 * @param array $data data to be exported.
+	 * @param array $rows header row.
+	 */
+	public function __construct( array $data, array $rows ) {
+		$this->data        = &$data;
+		$this->header_rows = &$rows;
+		$this->child       = get_class( $this );
+		$this->filename    = $this->child . '_' . date( 'Y-m-d_G-i' ) . '.csv';
+		$this->fh          = fopen( YRFW_PLUGIN_PATH . $this->filename, 'w' );
+		$this->init();
 	}
 
 	/**
@@ -46,7 +60,14 @@ class YRFW_CSV_Helper {
 	}
 
 	/**
-	 * Write all reviews to CSV file and return filename
+	 * Extra function to be run after construction.
+	 *
+	 * @return void
+	 */
+	abstract public function init();
+
+	/**
+	 * Write all data to CSV file and return filename
 	 *
 	 * @return string|bool return filename if successful and false if not
 	 */
@@ -54,14 +75,14 @@ class YRFW_CSV_Helper {
 		global $yrfw_logger;
 		try {
 			if ( $this->prepare_header_row() ) {
-				foreach ( $this->reviews as $review ) {
-					fputcsv( $this->fh, $review );
+				foreach ( $this->data as $item ) {
+					fputcsv( $this->fh, $item );
 				}
 			}
 			fclose( $this->fh );
 			return $this->filename;
 		} catch ( Exception $e ) {
-			$yrfw_logger->warn( 'Exporting reviews to CSV failed with ' . $e );
+			$yrfw_logger->warn( 'Exporting to CSV failed with ' . $e );
 			return false;
 		}
 	}
@@ -72,7 +93,7 @@ class YRFW_CSV_Helper {
 	 * @return callable
 	 */
 	private function prepare_header_row() {
-		return fputcsv( $this->fh, self::ROWS );
+		return fputcsv( $this->fh, $this->header_rows );
 	}
 
 }

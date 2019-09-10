@@ -1,6 +1,7 @@
 <?php
 global $yotpo_settings, $yotpo_cache, $yotpo_orders;
 $settings = ( $yotpo_settings->get_instance() )->get_settings();
+do_action( 'yrfw_extensions_admin_header' );
 // Move to Widgets tab if authenticated.
 if ( $settings['authenticated'] ) {
 	echo( '<script>jQuery(document).ready(function(){jQuery("#yotpo-widgets > a").click();})</script>' ); }

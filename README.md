@@ -43,9 +43,9 @@ __It is very important to note that this is STILL work in progress, and things M
 ##### Others
 - You can no longer "break" the plugin by using incorrect appkey and secret values. You can also reset the authentication.
 - Debug page is now easily accessible for debugging purposes.
-- Testing a mini dashboard with a couple of widgets (`Widgets\class-yrfw-dashboard.php`).
+- <del>Testing a mini dashboard with a couple of widgets (`Widgets\class-yrfw-dashboard.php`).</del>(This is now an extension)
 - Native review exporter has been rewritten and should now be much faster.
 - Order chunks for past order submission have been increased to 300 orders.
 - Product description is no longer sent as it is unused.
-- To expedite support, debug information can be retrieved using a hashed string by accessing `yotpo_debug_settings`.
-- Rich Snippet markup will now appear on product pages.
+- <del>To expedite support, debug information can be retrieved using a hashed string by accessing `yotpo_debug_settings`.</del>(This is now an extension)
+- <del>Rich Snippet markup will now appear on product pages.</del>(This is now an extension)

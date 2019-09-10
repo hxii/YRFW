@@ -55,4 +55,5 @@
 		<hr>
 		<button type="submit" name="update_settings" class="btn btn-primary"><?php esc_html_e( 'Save Settings', 'yrfw' ); ?></button>
 	</form>
+	<?php do_action( 'yrfw_extensions_settings' ); ?>
 </div>

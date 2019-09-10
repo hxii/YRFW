@@ -19,7 +19,7 @@ class YRFW_Review_Exporter {
 		$export_time     = microtime( true );
 		$this->image_map = new YRFW_Image_Map();
 		$reviews         = $this->exporter_prepare_reviews();
-		$csv_helper      = new YRFW_CSV_Helper( $reviews );
+		$csv_helper      = new YRFW_Export_Reviews( $reviews );
 		$file            = $csv_helper->generate_csv();
 		$yrfw_logger->debug( 'Exporting reviews took ' . ( microtime( true ) - $export_time ) . ' seconds.' );
 		return $file ?: false;

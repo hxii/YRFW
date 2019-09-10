@@ -1,39 +1,5 @@
-#toplevel_page_yotpo-reviews div.wp-menu-image img
-{
+#toplevel_page_yotpo-reviews div.wp-menu-image img {
 	padding-top: 4px;
-}
-#yotpo_dashboard_widget .inside {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-.yotpo-widget-container {
-	display: flex;
-	flex-wrap: wrap;
-}
-.yotpo-widget {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    /*flex-grow: 1;*/
-    margin: 0 .25em;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50px;
-    background: #1576ec;
-}
-.yotpo-widget h1 {
-	padding: 0;
-	font-size: 2em;
-	color: #fff;
-}
-.yotpo-widget span {
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: .85em;
-	color: #eee;
 }
 
 .bootstrap-wrapper {

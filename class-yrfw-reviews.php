@@ -4,11 +4,11 @@
 	Plugin Name: Yotpo Reviews for WooCommerce
 	Description: Yotpo Social Reviews helps Woocommerce store owners generate a ton of reviews for their products. Yotpo is the only solution which makes it easy to share your reviews automatically to your social networks to gain a boost in traffic and an increase in sales.
 	Author: Paul Glushak (hxii)
-	Version: 2.0.0
+	Version: 2.0.1
 	Author URI: https://github.com/hxii/
 	Plugin URI: https://github.com/hxii/YRFW
 	WC requires at least: 3.1.0
-	WC tested up to: 3.6.4
+	WC tested up to: 3.7.0
 	Text Domain: yrfw
 	Domain Path: /languages
 */
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || die();
 /**
  * Const definitions
  */
-define( 'YRFW_PLUGIN_VERSION', '2.0.0' );
+define( 'YRFW_PLUGIN_VERSION', '2.0.1' );
 define( 'YRFW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'YRFW_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'YRFW_BASENAME', plugin_basename( __FILE__ ) );
@@ -28,7 +28,6 @@ define( 'YRFW_PHP_VERSION', '7.0.0' );
 /**
  * Load all classes
  */
-// require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-settings.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-activate.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-actions.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-admin.php';
@@ -37,15 +36,13 @@ require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-assets.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-logger.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-exporter.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-settings-file.php';
-require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-rich-snippets.php';
+require_once YRFW_PLUGIN_PATH . 'inc/Base/class-yrfw-extensions.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Orders/class-yrfw-products.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Orders/class-yrfw-orders.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Orders/class-yrfw-past-orders.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Orders/class-yrfw-scheduler.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Widgets/class-yrfw-widgets.php';
-require_once YRFW_PLUGIN_PATH . 'inc/Widgets/class-yrfw-dashboard.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Helpers/class-yrfw-image-map.php';
-require_once YRFW_PLUGIN_PATH . 'inc/Helpers/class-yrfw-csv-helper.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Helpers/class-yrfw-product-cache.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Helpers/class-yrfw-api-wrapper.php';
 require_once YRFW_PLUGIN_PATH . 'inc/Helpers/class-yrfw-order-column.php';
@@ -64,11 +61,12 @@ class YRFW_Reviews {
 	 * Is WooCommerce available?
 	 */
 	public function __construct() {
-		if ( class_exists( 'woocommerce' ) ) {
+		global $yrfw_logger;
+		if ( defined( 'WC_VERSION' ) ) {
 			$this->load_textdomain();
 			$this->check_dependecies();
 		} else {
-			// Do nothing.
+			$yrfw_logger->info( 'class \'woocommerce\' doesn\'t exist!' );
 		}
 	}
 
@@ -107,18 +105,19 @@ class YRFW_Reviews {
 	 * @return void
 	 */
 	private function init() {
-		global $yotpo_settings, $yotpo_scheduler, $yotpo_actions, $yotpo_products, $yotpo_widgets, $yotpo_orders, $yotpo_richsnippets;
+		global $yotpo_settings, $yotpo_scheduler, $yotpo_actions, $yotpo_products, $yotpo_widgets, $yotpo_orders;
 		define( 'YRFW_CURRENCY', get_woocommerce_currency() );
 		new YRFW_Admin();
 		new YRFW_Assets();
 		new YRFW_Order_Column();
-		$yotpo_orders    = new YRFW_Orders();
-		$yotpo_widgets   = new YRFW_Widgets();
-		$yotpo_products  = new YRFW_Products();
-		$yotpo_settings  = YRFW_Settings_File::get_instance();
-		$yotpo_scheduler = new YRFW_Scheduler();
-		$yotpo_actions   = new YRFW_Actions();
-		$yotpo_richsnippets = new YRFW_Rich_Snippets();
+		$yotpo_orders     = new YRFW_Orders();
+		$yotpo_widgets    = new YRFW_Widgets();
+		$yotpo_products   = new YRFW_Products();
+		$yotpo_settings   = YRFW_Settings_File::get_instance();
+		$yotpo_scheduler  = new YRFW_Scheduler();
+		$yotpo_actions    = new YRFW_Actions();
+		$yotpo_extensions = YRFW_Extensions::get_instance();
+		$yotpo_extensions->load_extensions();
 	}
 
 	/**
@@ -141,7 +140,11 @@ class YRFW_Reviews {
 	}
 
 }
+add_action('plugins_loaded', 'initialize' );
 
-$yotpo = new YRFW_Reviews();
-register_activation_hook( __FILE__, array( $yotpo, 'activate' ) );
-register_deactivation_hook( __FILE__, array( $yotpo, 'deactivate' ) );
+function initialize() {
+	$yotpo = new YRFW_Reviews();
+	register_activation_hook( __FILE__, array( $yotpo, 'activate' ) );
+	register_deactivation_hook( __FILE__, array( $yotpo, 'deactivate' ) );
+}
+

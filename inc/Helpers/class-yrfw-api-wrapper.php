@@ -25,6 +25,14 @@ class YRFW_API_Wrapper {
 		$this->curl    = new dcai\curl();
 	}
 
+	public function get_base_uri() {
+		return self::$base_uri;
+	}
+
+	public function get_curl() {
+		return $this->curl;
+	}
+
 	public function get_token() {
 		$payload = [
 			'client_id'     => $this->app_key,
