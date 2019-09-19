@@ -1,4 +1,4 @@
-# Yotpo Reviews for WooCommerce (YRFW) BETA
+# Yotpo Reviews for WooCommerce (Unofficial)
 
 ### So what is this exactly?
 This plugin started it's life as a collection of fixes and modifications on top of the Yotpo WooCommerce plugin.

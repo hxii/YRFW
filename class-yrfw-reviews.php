@@ -23,7 +23,7 @@ define( 'YRFW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'YRFW_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'YRFW_BASENAME', plugin_basename( __FILE__ ) );
 define( 'YRFW_WC_VERSION', '3.1.0' );
-define( 'YRFW_PHP_VERSION', '7.0.0' );
+define( 'YRFW_PHP_VERSION', '7.2.0' );
 
 /**
  * Load all classes
