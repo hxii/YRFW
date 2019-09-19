@@ -68,7 +68,16 @@ class YRFW_Settings_File {
 	 * @return void
 	 */
 	public function set_settings( array $settings, bool $process, bool $update ) {
-		global $yotpo_scheduler;
+		// Unset non-valid keys and sanitize data.
+		$default_settings = $this->get_default_settings();
+		foreach ( $settings as $setting => $data ) {
+			if ( ! array_key_exists( $setting, $default_settings ) ) {
+				unset( $settings[ $setting ] );
+			} else {
+				$settings[ $setting ] = sanitize_text_field( $data );
+			}
+		}
+		global $yotpo_scheduler;	
 		if ( true === $process ) {
 			foreach ( $settings as $key => $value ) {
 				if ( 'true' === $value || '1' === $value ) {

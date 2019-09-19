@@ -92,7 +92,7 @@ class YRFW_Assets {
 		if ( ! $version ) {
 			global $settings_instance;
 			if ( empty( $settings_instance['app_key'] ) ) { return; }
-			$version = json_decode( file_get_contents('https://api.yotpo.com/widgetsmanager/v1/' . $settings_instance['app_key'] . '/account_widgets'), true )['account_widgets'][0]['widget_semantic_version'] ?? '';
+			$version = json_decode( wp_remote_retrieve_body( wp_remote_get( 'https://api.yotpo.com/widgetsmanager/v1/' . $settings_instance['app_key'] . '/account_widgets' ) ), true )['account_widgets'][0]['widget_semantic_version'] ?? '';
 			set_transient( 'yotpo_widget_version', $version, HOUR_IN_SECONDS );
 		}
 		return $version;
