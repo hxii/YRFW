@@ -59,8 +59,6 @@ class Hxii_Logger {
 	}
 
 	public function read_log( int $lines = 50 ) {
-		// return file_exists( $this->filepath ) ? file_get_contents( $this->filepath ) : false;
-		// return readfile( $this->filepath );
 		$tail = shell_exec( "tail -n $lines $this->filepath" );
 		return $tail;
 	}

@@ -122,7 +122,7 @@ class YRFW_Product_Cache {
 	 *
 	 * @return array product ids.
 	 */
-	private function get_all_product_ids() {
+	public function get_all_product_ids() {
 		global $wpdb;
 		$ids    = wp_cache_get( 'yotpo_product_cache' );
 		$prefix = $wpdb->prefix;
@@ -141,7 +141,7 @@ class YRFW_Product_Cache {
 	 *
 	 * @return mixed $data json ready product data.
 	 */
-	private function get_all_products_data() {
+	public function get_all_products_data() {
 		global $yotpo_products;
 		$ids      = $this->get_all_product_ids();
 		$images   = ( new YRFW_Image_Map() )->get_images();

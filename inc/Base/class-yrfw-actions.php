@@ -17,25 +17,23 @@ class YRFW_Actions {
 			add_action( 'init', array( $this, 'action_generate_product_cache' ), 9999 );
 			add_action( 'woocommerce_order_status_changed', array( $this, 'action_submit_order' ), 99, 1 );
 			if ( true === $settings_instance['bottom_line_enabled_product'] ) {
-				add_action( 'woocommerce_single_product_summary', array( $this, 'action_show_star_rating_widget' ), 5 ); // add if statment.
+				add_action( $settings_instance['product_bottomline_hook'], array( $this, 'action_show_star_rating_widget' ), $settings_instance['product_bottomline_priority'] );
 			} elseif ( 'jsinject' === $settings_instance['bottom_line_enabled_product'] ) {
 				add_action( 'wp_footer', array( $this, 'action_js_inject_star_rating' ) );
 			}
 			if ( true === $settings_instance['qna_enabled_product'] ) {
-				add_action( 'woocommerce_single_product_summary', array( $this, 'action_show_qa_widget' ), 6 );// add if statment.
+				add_action( $settings_instance['product_qna_hook'], array( $this, 'action_show_qa_widget' ), $settings_instance['product_qna_priority'] );
 			} elseif ( 'jsinject' === $settings_instance['qna_enabled_product'] ) {
 				add_action( 'wp_footer', array( $this, 'action_js_inject_qa' ) );
 			}
 			if ( true === $settings_instance['bottom_line_enabled_category'] ) {
-				add_action( 'woocommerce_after_shop_loop_item', array( $this, 'action_show_star_rating_widget' ), 5 );
+				add_action( $settings_instance['category_bottomline_hook'], array( $this, 'action_show_star_rating_widget' ), $settings_instance['category_bottomline_priority'] );
 			}
 			add_action( 'yotpo_scheduler_action', array( $this, 'action_perform_scheduler' ) );
-			// add_action( 'wp_dashboard_setup', array( $this, 'action_show_dashboard_widget' ) ); // Disabled until further notice ¯\_(ツ)_/¯
 			add_action( 'woocommerce_thankyou', array( $this, 'action_show_conversion_tracking' ), 1, 1 );
-			add_action( 'woocommerce_after_single_product', array( $this, 'action_show_rich_snippets' ) );
 			switch ( $settings_instance['widget_location'] ) {
 				case 'footer':
-					add_action( 'woocommerce_after_single_product', array( $this, 'action_show_main_widget' ) );
+					add_action( $settings_instance['main_widget_hook'], array( $this, 'action_show_main_widget' ), $settings_instance['main_widget_priority'] );
 					break;
 				case 'tab':
 					add_action( 'woocommerce_product_tabs', array( $this, 'action_show_main_widget_tab' ) );
@@ -155,15 +153,6 @@ class YRFW_Actions {
 	}
 
 	/**
-	 * Show Yotpo widget on WordPress dashboard
-	 *
-	 * @return callable
-	 */
-	public function action_show_dashboard_widget() {
-		return new YRFW_Dashboard_Widget();
-	}
-
-	/**
 	 * Start up the product cache.
 	 *
 	 * @return void
@@ -200,10 +189,5 @@ class YRFW_Actions {
 				return $tabs;
 			}, 99 );
 		}
-	}
-
-	public function action_show_rich_snippets() {
-		global $yotpo_richsnippets;
-		return $yotpo_richsnippets->do_richsnippet();
 	}
 }

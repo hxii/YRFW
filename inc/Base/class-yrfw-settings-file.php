@@ -53,7 +53,7 @@ class YRFW_Settings_File {
 			$settings = file_get_contents( self::$filename );
 			$settings = json_decode( $settings, true );
 		}
-		$settings['secret'] = get_option( 'yotpo_secret' );
+		$settings['secret'] = get_option( 'yotpo_secret', '' );
 		return $settings;
 	}
 
@@ -112,6 +112,7 @@ class YRFW_Settings_File {
 	public function get_default_settings() {
 		return [
 			'app_key'                      => '',
+			'secret'                       => 'secret',
 			'authenticated'                => false,
 			'widget_location'              => 'footer',
 			'language_code'                => 'en',

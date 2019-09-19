@@ -33,4 +33,24 @@
 			<small class="form-text text-muted"><?php esc_html_e( 'This will export all existing native WooCommerce reviews in an import-ready format for Yotpo.', 'yrfw' ); ?>.</small>
 		</div>
 	</form>
+	<h3>Loaded Extensions</h3>
+	<table class="table table-sm">
+		<thead class="thead-light"><tr><th>Extension Name</th>
+		<th>Extension Author</th>
+		<th>Extension Description</th></tr>
+		</thead>
+		<tbody>
+		<?php
+		$extension_handler = YRFW_Extensions::get_instance();
+		foreach ( $extension_handler->list_extensions() as $extension_name => $extension_data ) {
+			?>
+			<tr><td><a href="<?php echo $extension_data['extension_url']; ?>" targert="_blank"><?php echo $extension_name . ' ' . $extension_data['extension_version']; ?></a></td>
+			<td><?php echo $extension_data['extension_author']; ?></td>
+			<td><?php echo $extension_data['extension_description']; ?></td>
+			</li></tr>
+			<?php
+		}
+		?>
+		</tbody>
+	</table>
 </div>

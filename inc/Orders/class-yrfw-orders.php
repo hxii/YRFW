@@ -10,6 +10,7 @@ class YRFW_Orders {
 	 * @param  int  $order_id order ID to submit.
 	 * @param  bool $retry To prevent going into a loop, we will only try to get a new utoken once.
 	 * @return boolean        order submission success
+	 * @throws void Try and get new token in case of 401.
 	 */
 	public function submit_single_order( int $order_id, bool $retry = false ) {
 		global $yrfw_logger, $settings_instance;
@@ -40,11 +41,11 @@ class YRFW_Orders {
 								$yrfw_logger->info( "Order #$order_id submitted with response $response" );
 								$yrfw_logger->debug( 'The whole process took ' . ( microtime( true ) - $time ) . ' seconds to complete.' );
 								$this->update_order_meta( $order_id );
-							} elseif ( 401 === $response['code'] && ! retry ) {
-								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response['code'], true ) ) );
+							} elseif ( 401 === $response && ! $retry ) {
+								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response, true ) ) );
 								throw new Exception( 'Access Denied', 401 );
 							} else {
-								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response['code'], true ) ) );
+								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response, true ) ) );
 								return false;
 							}
 						} catch ( \Throwable $th ) {
@@ -63,7 +64,7 @@ class YRFW_Orders {
 	/**
 	 * Get single order information
 	 *
-	 * @param  int $order the order ID.
+	 * @param  object $order the order.
 	 * @return array product data array
 	 */
 	public function get_single_order_data( WC_Order $order ) {
@@ -72,9 +73,6 @@ class YRFW_Orders {
 		$order_data   = array();
 		$products_arr = array();
 		$order_id     = $order->get_id();
-		// if ( ! $order ) {
-		// 	return;
-		// }
 		$order_data['order_date'] = date( 'Y-m-d H:i:s', strtotime( $order->get_date_created() ) );
 		$email                    = $order->get_billing_email();
 		if (

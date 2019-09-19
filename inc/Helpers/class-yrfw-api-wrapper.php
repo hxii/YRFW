@@ -25,6 +25,14 @@ class YRFW_API_Wrapper {
 		$this->curl    = new dcai\curl();
 	}
 
+	public function get_base_uri() {
+		return self::$base_uri;
+	}
+
+	public function get_curl() {
+		return $this->curl;
+	}
+
 	public function get_token() {
 		$payload = [
 			'client_id'     => $this->app_key,
@@ -47,6 +55,16 @@ class YRFW_API_Wrapper {
 		$this->curl->appendRequestHeader( 'Content-Type', 'application/json' );
 		$response = $this->curl->post( self::$base_uri . "apps/$this->app_key/purchases/mass_create", json_encode( $orders ) );
 		return $response->statusCode;
+	}
+
+	public function get_product_bottomline( $product_id ) {
+		$this->curl->appendRequestHeader( 'Content-Type', 'application/json' );
+		$response = $this->curl->get( self::$base_uri . "products/$this->app_key/$product_id/bottomline" );
+		return $response->text;
+	}
+
+	public function get_site_bottomline() {
+		return $this->get_product_bottomline( 'yotpo_site_reviews' );
 	}
 
 }
