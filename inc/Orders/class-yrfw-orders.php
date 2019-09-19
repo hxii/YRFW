@@ -41,11 +41,11 @@ class YRFW_Orders {
 								$yrfw_logger->info( "Order #$order_id submitted with response $response" );
 								$yrfw_logger->debug( 'The whole process took ' . ( microtime( true ) - $time ) . ' seconds to complete.' );
 								$this->update_order_meta( $order_id );
-							} elseif ( 401 === $response['code'] && ! retry ) {
-								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response['code'], true ) ) );
+							} elseif ( 401 === $response && ! $retry ) {
+								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response, true ) ) );
 								throw new Exception( 'Access Denied', 401 );
 							} else {
-								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response['code'], true ) ) );
+								$yrfw_logger->warn( "Order #$order_id failed with response " . ( print_r( $response, true ) ) );
 								return false;
 							}
 						} catch ( \Throwable $th ) {
@@ -73,9 +73,6 @@ class YRFW_Orders {
 		$order_data   = array();
 		$products_arr = array();
 		$order_id     = $order->get_id();
-		// if ( ! $order ) {
-		// 	return;
-		// }
 		$order_data['order_date'] = date( 'Y-m-d H:i:s', strtotime( $order->get_date_created() ) );
 		$email                    = $order->get_billing_email();
 		if (
