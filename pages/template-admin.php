@@ -78,7 +78,7 @@ if ( isset( $_POST['action'] ) && wp_verify_nonce( $_POST['yotpo_login_form'], '
 				</div> <!-- tab-pane help -->
 			</div> <!-- tab-content -->
 		</div> <!-- tabs -->
-		<div id="yrfw-version" class="version badge badge-dark float-right mt-2">Yotpo <?php echo YRFW_PLUGIN_VERSION; ?></div>
+		<div id="yrfw-version" class="version badge badge-dark float-right mt-2">YRFW <?php echo YRFW_PLUGIN_VERSION; ?></div>
 		<?php echo ( '02-14' === date( 'm-d' ) ) ? '<div class="float-left" title="It\'s Paul\'s birthday">&#127867;</div>' : ''; ?>
 	</div>
 </div> <!-- wrap -->

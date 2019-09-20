@@ -1,5 +1,5 @@
 === Yotpo Reviews for WooCommerce (Unofficial) ===
-Contributors: hxii
+Contributors: Paul (hxii) Glushak
 Tags: yotpo,reviews,woocommerce,yrfw
 Donate link: http://paulglushak.com/
 Requires at least: 5.0
@@ -13,6 +13,7 @@ Collect and display reviews for your WooCommerce website.
 
 == Description ==
 Collect and display reviews for your WooCommerce website.
+Some extensions are available here on [GitHub](https://github.com/hxii/YRFW-Extensions)
 
 == Installation ==
 1. Install the plugin
@@ -20,6 +21,11 @@ Collect and display reviews for your WooCommerce website.
 3. Press Authenticate
 4. Configure to your liking
 5. Start collecting reviews
+
+== Screenshots ==
+1. Login form.
+2. Widget placement options.
+3. Help and information screen.
 
 == Frequently Asked Questions ==
 = Is this the official plugin? =
