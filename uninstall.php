@@ -6,4 +6,6 @@ delete_option( 'yotpo_settings' );
 delete_option( 'yotpo_secret' );
 delete_transient( 'yotpo_total_orders' );
 delete_transient( 'yotpo_last_sent_order' );
+delete_transient( 'yotpo_widget_version' );
+delete_transient( 'yotpo_utoken' );
 delete_post_meta_by_key( 'yotpo_order_sent' );

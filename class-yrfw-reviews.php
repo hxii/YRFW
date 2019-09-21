@@ -11,6 +11,12 @@
 	WC tested up to: 3.7.0
 	Text Domain: yrfw
 	Domain Path: /languages
+
+	This plugin relies on getting and receiving data to and from Yotpo and associated Yotpo domains (staticw2.yotpo.com, api.yotpo.com etc.).
+	More information about Yotpo can be found here:
+		https://www.yotpo.com/
+		https://www.yotpo.com/terms-of-service/
+		https://www.yotpo.com/privacy-policy/
 */
 
 defined( 'ABSPATH' ) || die();
@@ -23,7 +29,7 @@ define( 'YRFW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'YRFW_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'YRFW_BASENAME', plugin_basename( __FILE__ ) );
 define( 'YRFW_WC_VERSION', '3.1.0' );
-define( 'YRFW_PHP_VERSION', '7.0.0' );
+define( 'YRFW_PHP_VERSION', '7.2.0' );
 
 /**
  * Load all classes
@@ -140,11 +146,10 @@ class YRFW_Reviews {
 	}
 
 }
-add_action('plugins_loaded', 'initialize' );
+add_action( 'plugins_loaded', 'yrfw_initialize' );
 
-function initialize() {
+function yrfw_initialize() {
 	$yotpo = new YRFW_Reviews();
 	register_activation_hook( __FILE__, array( $yotpo, 'activate' ) );
 	register_deactivation_hook( __FILE__, array( $yotpo, 'deactivate' ) );
 }
-
