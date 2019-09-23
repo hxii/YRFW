@@ -13,7 +13,5 @@ class YRFW_Activate {
 	public function activate() {
 		global $yotpo_settings;
 		$yotpo_settings->get_settings();
-		// wp_redirect( admin_url( 'admin.php?page=yotpo-reviews' ) );
-		// exit;
 	}
 }
