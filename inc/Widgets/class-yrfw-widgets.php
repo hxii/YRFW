@@ -63,7 +63,7 @@ class YRFW_Widgets {
 		$total             = $order->get_total();
 		$currency          = YRFW_CURRENCY;
 		$conversion_params = "app_key=$settings_instance[app_key]&order_id=$order_id&order_amount=$total&order_currency=$currency";
-		echo "<script>yotpoTrackConversionData = {orderId: $order_id, orderAmount: $total, orderCurrency: '$currency'}</script>";
+		echo "<script>yotpoTrackConversionData = {orderId: '$order_id', orderAmount: $total, orderCurrency: '$currency'}</script>";
 		echo "<noscript><img
 			src='https://api.yotpo.com/conversion_tracking.gif?$conversion_params'
 			width='1'
