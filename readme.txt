@@ -1,5 +1,5 @@
 === Yotpo Reviews for WooCommerce (Unofficial) ===
-Contributors: Paul (hxii) Glushak
+Contributors: hxii
 Tags: yotpo,reviews,woocommerce,yrfw
 Donate link: http://paulglushak.com/
 Requires at least: 5.0
@@ -12,8 +12,10 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 Collect and display reviews for your WooCommerce website.
 
 == Description ==
-Collect and display reviews for your WooCommerce website.
-Some extensions are available here on [GitHub](https://github.com/hxii/YRFW-Extensions)
+This **(unofficial)** plugin started it's life as a collection of fixes and modifications on top of the Yotpo WooCommerce plugin.
+Then I've decided that the best way to learn and fix something is to make it from scratch, which is exactly what this plugin is.
+This plugin is also on [GitHub](https://github.com/hxii/YRFW).
+Some extensions are available here on [GitHub](https://github.com/hxii/YRFW-Extensions).
 
 == Installation ==
 1. Install the plugin
@@ -34,6 +36,10 @@ No, this is a completely rewritten plugin made by Paul (hxii) Glushak.
 - [The page on my website](https://paulglushak.com/yotpo-reviews-for-woocommerce) is often updated with new information.
 - Use support section here on wordpress.org
 - Get in touch with me by email: paul@glushak.net
+= Extensions? =
+This plugin now supports (basic) extensions, yes!
+You can find some extensions made by me on GitHub [here](https://github.com/hxii/YRFW-Extensions).
+Just place them in the `/extensions` folder.
 
 == Changelog ==
 = 2.0.1 =

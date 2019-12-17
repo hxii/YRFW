@@ -42,7 +42,7 @@
 		<tbody>
 		<?php
 		$extension_handler = YRFW_Extensions::get_instance();
-		foreach ( $extension_handler->list_extensions() as $extension_name => $extension_data ) {
+		foreach ( (array) $extension_handler->list_extensions() as $extension_name => $extension_data ) {
 			?>
 			<tr><td><a href="<?php echo $extension_data['extension_url']; ?>" targert="_blank"><?php echo $extension_name . ' ' . $extension_data['extension_version']; ?></a></td>
 			<td><?php echo $extension_data['extension_author']; ?></td>
