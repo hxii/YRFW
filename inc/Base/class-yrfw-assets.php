@@ -55,6 +55,7 @@ class YRFW_Assets {
 		add_action( 'wp_head', array( $this, 'assets_preload_js' ), 2 );
 		wp_enqueue_script( 'yotpo_widget', '//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js', '', null );
 		wp_enqueue_style( 'bottomline_css', ( YRFW_PLUGIN_URL . '/assets/css/bottom-line.css' ) );
+		add_filter( 'script_loader_tag', array( $this, 'append_async' ), 10, 2 );
 	}
 
 	/**
@@ -77,9 +78,23 @@ class YRFW_Assets {
 	 */
 	public function assets_prefetch_yotpo() {
 		echo '<link rel="preconnect" href="//staticw2.yotpo.com">';
-		echo '<link rel="preconnect" href="//staticw2.yotpo.com/batch">';
 		echo '<link rel="preconnect" href="//api.yotpo.com">';
 		echo '<link rel="preconnect" href="//w2.yotpo.com">';
+	}
+
+	/**
+	 * Append async attribute to Yotpo Widget
+	 *
+	 * @param string tag    $tag script tag.
+	 * @param string handle $handle enqueue handle. We're only looking for 'yotpo_widget'.
+	 * @return string filtered tag if handle matches.
+	 */
+	public function append_async( $tag, $handle ) {
+		if ( 'yotpo_widget' === $handle ) {
+			return str_replace( ' src', ' async="async" src', $tag );
+		} else {
+			return $tag;
+		}
 	}
 
 	/**

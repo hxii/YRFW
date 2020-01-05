@@ -27,10 +27,8 @@ class YRFW_Products {
 				'id'          => ( $id = $product->get_id() ),
 				'url'         => get_permalink( $id ),
 				'lang'        => $settings_instance['yotpo_language_as_site'] ? explode( '-', get_bloginfo( 'language' ) )[0] : $settings_instance['language_code'],
-				// 'description' => wp_strip_all_tags( substr( $product->get_short_description(), 0, 255 ) ),
 				'description' => '',
 				'name'        => $product->get_title(),
-				// 'image'       => $this->get_product_image( $id ),
 				'price'       => $product->get_price(),
 				'specs'       => array_filter( [
 					'external_sku' => $product->get_sku(),

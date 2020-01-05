@@ -65,11 +65,11 @@ class YRFW_Product_Cache {
 	 */
 	public function create_missing_product( int $product_id ) {
 		global $yotpo_products;
-		$missing_product[ $product_id ]          = $yotpo_products->get_product_data( wc_get_product( $product_id ) );
-		$missing_product[ $product_id ]['image'] = $yotpo_products->get_product_image( $product_id );
-		$this->product_cache                     = $missing_product + $this->product_cache;
+		$missing_product                    = $yotpo_products->get_product_data( wc_get_product( $product_id ) );
+		$missing_product['image']           = $yotpo_products->get_product_image( $product_id );
+		$this->product_cache[ $product_id ] = $missing_product;
 		if ( $this->save_products( $this->product_cache ) ) {
-			return $missing_product[ $product_id ];
+			return $missing_product;
 		}
 	}
 
@@ -93,7 +93,7 @@ class YRFW_Product_Cache {
 	public function save_products( $data, string $mode = 'w' ) {
 		$products                       = $data;
 		$products['cache_generated_at'] = date( 'd-m-Y h:i:s' );
-		$products                       = wp_json_encode( $products, JSON_PRETTY_PRINT );
+		$products                       = wp_json_encode( $products );
 		$filesave                       = file_put_contents( $this->filename, $products );
 		if ( false !== $filesave || -1 !== $filesave ) {
 			return true;
