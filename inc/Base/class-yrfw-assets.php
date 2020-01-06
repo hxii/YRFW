@@ -22,9 +22,9 @@ class YRFW_Assets {
 	private function load_assets() {
 		global $settings_instance;
 		if ( ! is_admin() && true === $settings_instance['authenticated'] ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'assets_load_frontend' ), 5 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'assets_load_frontend' ), 1 );
 		} else {
-			add_action( 'admin_enqueue_scripts', array( $this, 'assets_load_admin' ), 5 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'assets_load_admin' ), 1 );
 		}
 	}
 
@@ -55,7 +55,7 @@ class YRFW_Assets {
 		add_action( 'wp_head', array( $this, 'assets_preload_js' ), 2 );
 		wp_enqueue_script( 'yotpo_widget', '//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js', '', null );
 		wp_enqueue_style( 'bottomline_css', ( YRFW_PLUGIN_URL . '/assets/css/bottom-line.css' ) );
-		add_filter( 'script_loader_tag', array( $this, 'append_async' ), 10, 2 );
+		add_filter( 'script_loader_tag', array( $this, 'append_async' ), 1, 2 );
 	}
 
 	/**
@@ -66,11 +66,9 @@ class YRFW_Assets {
 	public function assets_preload_js() {
 		global $settings_instance;
 		$version = $this->get_widget_version();
-		if ( ! is_checkout() ) {
-			echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js" as="script">';
-			echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.css?widget_version=' . $version . '" as="style">';
-			echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font" crossorigin="anonymous">';
-		}
+		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js" as="script">';
+		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.css?widget_version=' . $version . '" as="style">';
+		echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font" crossorigin="anonymous">';
 	}
 
 	/**
@@ -85,15 +83,15 @@ class YRFW_Assets {
 	}
 
 	/**
-	 * Append async attribute to Yotpo Widget
+	 * Append defer attribute to Yotpo Widget in order to fix conversion tracking not working.
 	 *
 	 * @param string tag    $tag script tag.
 	 * @param string handle $handle enqueue handle. We're only looking for 'yotpo_widget'.
 	 * @return string filtered tag if handle matches.
 	 */
 	public function append_async( $tag, $handle ) {
-		if ( 'yotpo_widget' === $handle ) {
-			return str_replace( ' src', ' async="async" src', $tag );
+		if ( 'yotpo_widget' === $handle && is_checkout() ) {
+			return str_replace( ' src', ' defer src', $tag );
 		} else {
 			return $tag;
 		}
