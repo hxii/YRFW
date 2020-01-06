@@ -35,7 +35,7 @@ class YRFW_Assets {
 	 * @return void
 	 */
 	public function assets_load_admin( $hook ) {
-		if ( strpos( $hook, 'yotpo-reviews') !== false ) {
+		if ( strpos( $hook, 'yotpo-reviews' ) !== false ) {
 			wp_enqueue_style( 'hxii-log-stylesheet', ( YRFW_PLUGIN_URL . '/assets/css/hxii-log.css' ) );
 			wp_enqueue_style( 'bootstrap_css', ( YRFW_PLUGIN_URL . '/assets/css/bootstrap-wrapper.css' ) );
 			wp_enqueue_script( 'yotpoSettingsJs', ( YRFW_PLUGIN_URL . '/assets/js/settings.js' ) );
@@ -51,7 +51,7 @@ class YRFW_Assets {
 	 */
 	public function assets_load_frontend() {
 		global $settings_instance;
-		add_action( 'wp_head', array( $this, 'assets_prefetch_yotpo' ), 1 );
+		add_action( 'wp_head', array( $this, 'assets_preconnect_yotpo' ), 1 );
 		add_action( 'wp_head', array( $this, 'assets_preload_js' ), 2 );
 		wp_enqueue_script( 'yotpo_widget', '//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js', '', null );
 		wp_enqueue_style( 'bottomline_css', ( YRFW_PLUGIN_URL . '/assets/css/bottom-line.css' ) );
@@ -66,17 +66,19 @@ class YRFW_Assets {
 	public function assets_preload_js() {
 		global $settings_instance;
 		$version = $this->get_widget_version();
-		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js" as="script">';
-		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.css?widget_version=' . $version . '" as="style">';
-		echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font" crossorigin="anonymous">';
+		if ( ! is_checkout() ) {
+			echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js" as="script">';
+			echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.css?widget_version=' . $version . '" as="style">';
+			echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font" crossorigin="anonymous">';
+		}
 	}
 
 	/**
-	 * Prefetch for all Yotpo domains
+	 * Preconnect for all Yotpo domains
 	 *
 	 * @return void
 	 */
-	public function assets_prefetch_yotpo() {
+	public function assets_preconnect_yotpo() {
 		echo '<link rel="preconnect" href="//staticw2.yotpo.com">';
 		echo '<link rel="preconnect" href="//api.yotpo.com">';
 		echo '<link rel="preconnect" href="//w2.yotpo.com">';

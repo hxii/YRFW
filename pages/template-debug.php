@@ -1,5 +1,4 @@
 <?php
-// $settingss = (YRFW_Settings_File::get_instance())->migrate_settings();
 
 global $yotpo_settings, $settings_instance, $yotpo_orders;
 $settings = ( YRFW_Settings_File::get_instance() )->get_settings();

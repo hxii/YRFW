@@ -136,7 +136,7 @@ class YRFW_Reviews {
 			$this->init();
 		} else {
 			new YRFW_Messages(
-				/* translators: 1:current WC version 2:current PHP version 3:required WC version 4:required∂ PHP version */
+				/* translators: 1:current WC version 2:current PHP version 3:required WC version 4:required PHP version */
 				sprintf( __( '<strong>Yotpo Reviews for WooCommerce -</strong> You are using WooCommerce %1$s and PHP %2$s. <strong>WooCommerce %3$s and above with PHP %4$s and above are required.</strong>', 'yrfw' ), WOOCOMMERCE_VERSION, phpversion(), YRFW_WC_VERSION, YRFW_PHP_VERSION ),
 				'error',
 				false,
