@@ -43,7 +43,7 @@ Just place them in the `/extensions` folder.
 
 == Changelog ==
 = 2.0.2 =
-- Added `async` attribute to Yotpo Widget via function since WP doesn't have that. Conversion doesn't work otherwise.
+- Added `defer` attribute to Yotpo Widget via function since WP doesn't have that. Conversion doesn't work otherwise.
 - Minor changes to how the product cache is appended. Thanks Eric for that `Unsupported operand types`. ¯\_(ツ)_/¯
 - Some cleanup. We don't like messy code.
 - Tested with WP 5.4-alpha-47039 and WC 3.9.0-rc.2. Bleeding edge!
