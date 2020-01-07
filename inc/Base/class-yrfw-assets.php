@@ -22,9 +22,9 @@ class YRFW_Assets {
 	private function load_assets() {
 		global $settings_instance;
 		if ( ! is_admin() && true === $settings_instance['authenticated'] ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'assets_load_frontend' ), 5 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'assets_load_frontend' ), 1 );
 		} else {
-			add_action( 'admin_enqueue_scripts', array( $this, 'assets_load_admin' ), 5 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'assets_load_admin' ), 1 );
 		}
 	}
 
@@ -35,7 +35,7 @@ class YRFW_Assets {
 	 * @return void
 	 */
 	public function assets_load_admin( $hook ) {
-		if ( strpos( $hook, 'yotpo-reviews') !== false ) {
+		if ( strpos( $hook, 'yotpo-reviews' ) !== false ) {
 			wp_enqueue_style( 'hxii-log-stylesheet', ( YRFW_PLUGIN_URL . '/assets/css/hxii-log.css' ) );
 			wp_enqueue_style( 'bootstrap_css', ( YRFW_PLUGIN_URL . '/assets/css/bootstrap-wrapper.css' ) );
 			wp_enqueue_script( 'yotpoSettingsJs', ( YRFW_PLUGIN_URL . '/assets/js/settings.js' ) );
@@ -51,10 +51,11 @@ class YRFW_Assets {
 	 */
 	public function assets_load_frontend() {
 		global $settings_instance;
-		add_action( 'wp_head', array( $this, 'assets_prefetch_yotpo' ), 1 );
+		add_action( 'wp_head', array( $this, 'assets_preconnect_yotpo' ), 1 );
 		add_action( 'wp_head', array( $this, 'assets_preload_js' ), 2 );
 		wp_enqueue_script( 'yotpo_widget', '//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js', '', null );
 		wp_enqueue_style( 'bottomline_css', ( YRFW_PLUGIN_URL . '/assets/css/bottom-line.css' ) );
+		add_filter( 'script_loader_tag', array( $this, 'append_async' ), 1, 2 );
 	}
 
 	/**
@@ -71,15 +72,29 @@ class YRFW_Assets {
 	}
 
 	/**
-	 * Prefetch for all Yotpo domains
+	 * Preconnect for all Yotpo domains
 	 *
 	 * @return void
 	 */
-	public function assets_prefetch_yotpo() {
+	public function assets_preconnect_yotpo() {
 		echo '<link rel="preconnect" href="//staticw2.yotpo.com">';
-		echo '<link rel="preconnect" href="//staticw2.yotpo.com/batch">';
 		echo '<link rel="preconnect" href="//api.yotpo.com">';
 		echo '<link rel="preconnect" href="//w2.yotpo.com">';
+	}
+
+	/**
+	 * Append defer attribute to Yotpo Widget in order to fix conversion tracking not working.
+	 *
+	 * @param string tag    $tag script tag.
+	 * @param string handle $handle enqueue handle. We're only looking for 'yotpo_widget'.
+	 * @return string filtered tag if handle matches.
+	 */
+	public function append_async( $tag, $handle ) {
+		if ( 'yotpo_widget' === $handle && is_checkout() ) {
+			return str_replace( ' src', ' defer src', $tag );
+		} else {
+			return $tag;
+		}
 	}
 
 	/**

@@ -4,11 +4,11 @@
 	Plugin Name: Yotpo Reviews for WooCommerce
 	Description: Yotpo Social Reviews helps Woocommerce store owners generate a ton of reviews for their products. Yotpo is the only solution which makes it easy to share your reviews automatically to your social networks to gain a boost in traffic and an increase in sales.
 	Author: Paul Glushak (hxii)
-	Version: 2.0.1
+	Version: 2.0.2
 	Author URI: https://github.com/hxii/
 	Plugin URI: https://github.com/hxii/YRFW
 	WC requires at least: 3.1.0
-	WC tested up to: 3.7.0
+	WC tested up to: 3.9.0
 	Text Domain: yrfw
 	Domain Path: /languages
 
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || die();
 /**
  * Const definitions
  */
-define( 'YRFW_PLUGIN_VERSION', '2.0.1' );
+define( 'YRFW_PLUGIN_VERSION', '2.0.2' );
 define( 'YRFW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'YRFW_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'YRFW_BASENAME', plugin_basename( __FILE__ ) );
@@ -136,7 +136,7 @@ class YRFW_Reviews {
 			$this->init();
 		} else {
 			new YRFW_Messages(
-				/* translators: 1:current WC version 2:current PHP version 3:required WC version 4:required∂ PHP version */
+				/* translators: 1:current WC version 2:current PHP version 3:required WC version 4:required PHP version */
 				sprintf( __( '<strong>Yotpo Reviews for WooCommerce -</strong> You are using WooCommerce %1$s and PHP %2$s. <strong>WooCommerce %3$s and above with PHP %4$s and above are required.</strong>', 'yrfw' ), WOOCOMMERCE_VERSION, phpversion(), YRFW_WC_VERSION, YRFW_PHP_VERSION ),
 				'error',
 				false,
