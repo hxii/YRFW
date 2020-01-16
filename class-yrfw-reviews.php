@@ -4,7 +4,7 @@
 	Plugin Name: Yotpo Reviews for WooCommerce
 	Description: Yotpo Social Reviews helps Woocommerce store owners generate a ton of reviews for their products. Yotpo is the only solution which makes it easy to share your reviews automatically to your social networks to gain a boost in traffic and an increase in sales.
 	Author: Paul Glushak (hxii)
-	Version: 2.0.2
+	Version: 2.0.3
 	Author URI: https://github.com/hxii/
 	Plugin URI: https://github.com/hxii/YRFW
 	WC requires at least: 3.1.0
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || die();
 /**
  * Const definitions
  */
-define( 'YRFW_PLUGIN_VERSION', '2.0.2' );
+define( 'YRFW_PLUGIN_VERSION', '2.0.3' );
 define( 'YRFW_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'YRFW_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'YRFW_BASENAME', plugin_basename( __FILE__ ) );
