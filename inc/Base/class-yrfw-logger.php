@@ -32,7 +32,7 @@ class Hxii_Logger {
 		$this->loglevel = $level;
 		$this->logsize  = ( $size * 1048576 );
 		$this->date_format = ( ! empty( $date_format ) ) ? $date_format : 'Y-m-d H:i:s';
-		$this->filehandler = fopen( $this->filepath, 'a' ) or exit( "Can't open $this->filepath!" );
+		$this->filehandler = fopen( $this->filepath, 'a' ) or $this->loglevel = 'off';
 	}
 
 	public function __destruct(){
