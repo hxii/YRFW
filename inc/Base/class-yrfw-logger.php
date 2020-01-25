@@ -4,15 +4,16 @@
  * hxiilog
  * very simple, constantly evolving logger class for stuff and things
  * by Paul Glushak aka hxii
- * v. 0.2
+ * v. 0.2.2
  * http://github.com/hxii/
  */
 
 defined( 'ABSPATH' ) || die();
 
-define( 'HXII_LOGGER_VER', '0.2.1' );
+define( 'HXII_LOGGER_VER', '0.2.2' );
 
 class Hxii_Logger {
+	public $err;
 	public $filename;
 	public $filepath;
 	public $loglevel;
@@ -32,7 +33,12 @@ class Hxii_Logger {
 		$this->loglevel = $level;
 		$this->logsize  = ( $size * 1048576 );
 		$this->date_format = ( ! empty( $date_format ) ) ? $date_format : 'Y-m-d H:i:s';
-		$this->filehandler = fopen( $this->filepath, 'a' ) or exit( "Can't open $this->filepath!" );
+		if ( is_writable( $this->filepath ) ) {
+			$this->filehandler = fopen( $this->filepath, 'a' );
+		} else {
+			$this->loglevel = 'off';
+			$this->err      = true;
+		}
 	}
 
 	public function __destruct(){
