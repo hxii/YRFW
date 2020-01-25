@@ -57,7 +57,7 @@ require_once YRFW_PLUGIN_PATH . 'inc/Helpers/curl.php';
 global $yrfw_logger, $settings_instance;
 $settings_instance = ( YRFW_Settings_File::get_instance() )->get_settings();
 $yrfw_logger       = new Hxii_Logger( YRFW_PLUGIN_PATH . 'yotpo_debug.log', ( isset( $settings_instance['debug_level'] ) ) ? $settings_instance['debug_level'] : 'info' );
-if ( $yrfw_logger->err ) {
+if ( $yrfw_logger->err && $settings_instance['debug_mode'] ) {
 	new YRFW_Messages( '<strong>Yotpo Reviews for WooCommerce</strong> - Unable to open log file. Please check permissions/ownership on the <code>yotpo_debug.log</code> file. Debugging has been disabled', 'error', false, true );
 }
 
