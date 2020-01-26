@@ -42,6 +42,8 @@ You can find some extensions made by me on GitHub [here](https://github.com/hxii
 Just place them in the `/extensions` folder.
 
 == Changelog ==
+= 2.0.4 =
+- Non-writeable log file no longer prevents WP from loading and showing notice instead.
 = 2.0.3 =
 - Fixed conversion tracking total sum to be string instead of float.
 = 2.0.2 =
