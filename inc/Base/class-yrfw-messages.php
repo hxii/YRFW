@@ -22,8 +22,9 @@ class YRFW_Messages {
 		$this->_dismissible = $dismissible;
 		if ( $notice ) {
 			add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+		} else {
+			add_action( 'throw_message', array( $this, 'throw_message' ) );
 		}
-		add_action( 'throw_message', array( $this, 'throw_message' ) );
 	}
 
 	/**
