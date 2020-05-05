@@ -67,8 +67,10 @@ class YRFW_Assets {
 		global $settings_instance;
 		$version = $this->get_widget_version();
 		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.js" as="script">';
-		echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.css?widget_version=' . $version . '" as="style">';
-		echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font" crossorigin="anonymous">';
+		if ( '' !== $version ) {
+			echo '<link rel="preload" href="//staticw2.yotpo.com/' . $settings_instance['app_key'] . '/widget.css?widget_version=' . $version . '" as="style">';
+			echo '<link rel="preload" href="//staticw2.yotpo.com/assets/yotpo-widget-font.woff?version=' . $version . '" as="font" crossorigin="anonymous">';
+		}
 	}
 
 	/**
