@@ -9,7 +9,7 @@ if ( isset( $_POST['reset_settings'] ) && wp_verify_nonce( $_POST['yotpo_debug_s
 	if ( $yotpo_settings->set_settings( $yotpo_settings->get_default_settings(), false, false ) ) {
 		new YRFW_Messages( 'Reset successful!', 'success', true, true );
 	}
-} elseif ( isset( $_POST['update_settings'] ) ) {
+} elseif ( isset( $_POST['update_settings'] ) && wp_verify_nonce( $_POST['yotpo_debug_settings'], 'settings' ) ) {
 	$settings_instance = YRFW_Settings_File::get_instance();
 	$settings_instance->set_settings( $_POST, true, true );
 } elseif ( isset( $_POST['reset_debug_log'] ) && wp_verify_nonce( $_POST['debug_log'], 'debug' ) ) {
